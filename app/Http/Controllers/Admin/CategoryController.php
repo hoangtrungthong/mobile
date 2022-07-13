@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductAttribute;
+use App\Models\ProductImage;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -131,33 +134,27 @@ class CategoryController extends Controller
             DB::beginTransaction();
 
             $parentCategory = $this->categoryRepository
-                ->with('products')
                 ->whereId($category->parent)
                 ->first();
 
             if ($parentCategory) {
-                foreach ($category->childrenCategory as $child) {
-                    $child->update(
-                        [
-                            'parent' => $parentCategory->parent,
-                        ]
-                    );
-                }
+                $this->categoryRepository
+                    ->whereIn('id', $category->childrenCategory->pluck('id')->toArray())
+                    ->update([
+                        'parent' => $parentCategory->id,
+                    ]);
             } else {
-                foreach ($category->childrenCategory as $child) {
-                    $child->update(
-                        [
-                            'parent' => config('const.active'),
-                        ]
-                    );
-                }
+                $this->categoryRepository
+                    ->whereIn('id', $category->childrenCategory->pluck('id')->toArray())
+                    ->update([
+                        'parent' => config('const.active'),
+                    ]);
             }
 
-            foreach ($category->products as $product) {
-                $product->productAttributes()->delete();
-                $product->productImages()->delete();
-                $product->delete();
-            }
+            $productIds = $category->products->pluck('id')->toArray();
+            ProductAttribute::whereIn('product_id', $productIds)->delete();
+            ProductImage::whereIn('product_id', $productIds)->delete();
+            Product::whereIn('id', $productIds)->delete();
 
             $category->delete();
 

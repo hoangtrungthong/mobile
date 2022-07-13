@@ -81,6 +81,15 @@ class OrderController extends Controller
             $order = $this->orderRepository->create($data);
 
             foreach ($cart as $value) {
+                // $dataCart[] = [
+                //     'order_id' => $order->id,
+                //     'product_id' => $value['id'],
+                //     'color_id' => $value['color'],
+                //     'memory_id' => $value['memory'],
+                //     'price' => $value['price'],
+                //     'quantity' => $value['quantity'],
+                //     'image' => $value['image'],
+                // ];
                 $this->orderDetailRepository->create(
                     [
                         'order_id' => $order->id,
@@ -93,6 +102,8 @@ class OrderController extends Controller
                     ]
                 );
             }
+
+            // $this->orderDetailRepository->insert($dataCart);
 
             Session::forget('cart');
 
@@ -133,13 +144,14 @@ class OrderController extends Controller
                 }
 
                 $remaining = $productAttr->quantity - $item->quantity;
-                $productAttr->update(
-                    [
-                        'quantity' => $remaining,
-                    ]
-                );
-            }
 
+                $productAttrIds[] = [$productAttr->id];
+                $dataQuantity[] = [
+                    'quantity' => $remaining,
+                ];
+            } 
+            // dd($productAttrIds, $dataQuantity);
+            DB::table('product_attributes')->whereIn('id', $productAttrIds)->update($dataQuantity);
             $this->orderRepository->whereId($id)->update(
                 [
                     'status' => config('const.approve'),

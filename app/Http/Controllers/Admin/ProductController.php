@@ -107,26 +107,26 @@ class ProductController extends Controller
             }
 
             foreach ($request->quantity as $key => $item) {
-                $this->productAttributeRepository->create(
-                    [
-                        'product_id' => $product->id,
-                        'quantity' => $item,
-                        'color_id' => $color[$key],
-                        'memory_id' => $memory[$key],
-                        'price' => $price[$key],
-                    ]
-                );
+                $dataForInsert[] = [
+                    'product_id' => $product->id,
+                    'quantity' => $item,
+                    'color_id' => $color[$key],
+                    'memory_id' => $memory[$key],
+                    'price' => $price[$key],
+                ];
             };
+            
+            $this->productAttributeRepository->insert($dataForInsert);
 
             foreach ($request->images as $file) {
                 $img = uploadFile('images', config('path.PRODUCT_UPLOAD_PATH'), $request, $file);
-                $this->productImageRepository->create(
-                    [
-                        'product_id' => $product->id,
-                        'path' => $img,
-                    ]
-                );
+                $imgsInsert[] =  [
+                    'product_id' => $product->id,
+                    'path' => $img,
+                ];
             }
+
+            $this->productImageRepository->insert($imgsInsert);
 
             DB::commit();
 
