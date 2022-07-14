@@ -68,4 +68,11 @@ return [
     'empty_notify' => 'Hiện tại không có thông báo !',
     'report_sales' => ' Báo cáo doanh số bán hàng trong tháng ',
     'title_chart' => 'Biểu đồ thống kê doanh thu',
+    'status' => 'Đánh giá',
+    'general' => [
+        "wrong" => "Rất tiếc đã xảy ra lỗi!",
+    ],
+    'success' => [
+        'update' => ' Cập nhật thành công',
+    ]
 ];

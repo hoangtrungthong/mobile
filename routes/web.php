@@ -19,6 +19,7 @@ use App\Http\Controllers\CartController;
 require __DIR__.'/auth.php';
 
 Route::group(['middleware' => 'locale'], function () {
+    Route::get('language/{language}', [HomeController::class, 'changeLang'])->name('lang');
     Route::get('cart', [CartController::class, 'index'])->name('cart');
     Route::get('search', [ProductController::class, 'search'])->name('search');
     Route::get('/', [HomeController::class, 'index'])->name('home');

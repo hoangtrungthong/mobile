@@ -67,5 +67,12 @@ return [
     'unread' => 'Unread',
     'empty_notify' => 'There are currently no notifications !',
     'report_sales' => ' Report sales of ',
-    'title_chart' => 'Revenue Statistical chart'
+    'title_chart' => 'Revenue Statistical chart',
+    'status' => 'Status',
+    'general' => [
+        'wrong' => 'Opps! Somthing went wrong',
+    ],
+    'success' => [
+        'update' => 'Update successfully',
+    ]
 ];

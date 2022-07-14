@@ -19,7 +19,7 @@ class ManageUserController extends Controller
     {
         $users = $this->userRepository
             ->where('role_id', config('const.user'))
-            ->simplePaginate(config('const.pagination'));
+            ->paginate(config('const.pagination'));
 
         return view('admin.users.index', compact('users'));
     }

@@ -1,57 +1,113 @@
 <x-app-layout>
     <x-slot name="slot">
-        <div class="mx-auto grid grid-cols-12 gap-6">
-            @foreach ($users as $user)
-                <div class="intro-y col-span-12 md:col-span-6">
-                    <div class="box">
-                        <div class="flex flex-col lg:flex-row items-center p-5">
-                            <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1 mb-4">
-                                <img class="rounded-full"
-                                    src="@if ($user->image)
-                                            {{ Storage::url($user->image) }}
-                                        @else
-                                            {{ asset('images/avatar_default.png') }}
-                                        @endif">
-                                @if ($user->is_block === config('const.active'))
-                                    <p class="text-green-800 font-black rounded-b-full text-center">
-                                        {{ __('user.active') }}
-                                    </p>
-                                @else
-                                    <p class="text-red-800 font-black rounded-b-full text-center">
-                                        {{ __('user.block') }}
-                                    </p>
-                                @endif
-                                </p>
+        <div class="px-4 md:px-10 mx-auto w-full -m-24">
+            <div class="flex flex-wrap mt-4">
+                <div class="w-full mb-12 px-4">
+                    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
+                        {{-- <div class="rounded-t mb-0 px-4 py-3 border-0">
+                            <div class="flex flex-wrap items-center">
+                                <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                                    <h3 class="font-semibold text-lg text-blueGray-700">
+                                        Card Tables
+                                    </h3>
+                                </div>
                             </div>
-                            <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                                <p class="font-medium">
-                                    {{ $user->name }}
-                                </p>
-                                <p class="text-gray-600 text-xs mt-0.5">
-                                    {{ $user->phone }}
-                                </p>
-                            </div>
-                            <div class="flex mt-4 lg:mt-0">
-                                @if ($user->is_block === config('const.active'))
-                                    <form action="{{ route('admin.blockUser', ['user' => $user]) }}" method="post">
-                                        @method('PATCH')
-                                        @csrf
-                                        <button type="submit"
-                                            class="bg-red-500 text-gray-200 rounded hover:bg-red-400 px-2 focus:outline-none">{{ __('user.block') }}</button>
-                                    </form>
-                                @else
-                                    <form action="{{ route('admin.activeUser', ['user' => $user]) }}" method="post">
-                                        @method('PATCH')
-                                        @csrf
-                                        <button type="submit"
-                                            class="bg-green-500 text-gray-100 rounded hover:bg-green-400 px-2 focus:outline-none">{{ __('user.active') }}</button>
-                                    </form>
-                                @endif
-                            </div>
+                        </div> --}}
+                        <div class="block w-full overflow-x-auto">
+                            <!-- Projects table -->
+                            <table id="manage-user" class="items-center w-full bg-transparent border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            {{ __('#') }}
+                                        </th>
+                                        <th
+                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            {{ __('common.name') }}
+                                        </th>
+                                        <th
+                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            {{ __('common.phone') }}
+                                        </th>
+                                        <th
+                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            {{ __('common.address') }}
+                                        </th>
+                                        <th
+                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            {{ __('common.status') }}
+                                        </th>
+                                        <th
+                                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $num = 1;    
+                                    @endphp
+                                    @foreach ($users as $user)
+                                        <tr>
+                                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                                <span class="font-bold text-blueGray-600">
+                                                    {{ $num++ }}
+                                                </span>
+                                            </td>
+                                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                                <img src="@if ($user->image)
+                                                        {{ Storage::url($user->image) }}
+                                                    @else
+                                                        {{ asset('images/avatar_default.png') }}
+                                                    @endif"
+                                                    class="h-12 w-12 bg-white rounded-full border" alt="..." />
+                                                <span class="ml-3 font-bold text-blueGray-600">
+                                                    {{ $user->name }}
+                                                </span>
+                                            </td>
+                                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                {{ $user->phone }}
+                                            </td>
+                                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                {{ $user->address }}
+                                            </td>
+                                            <td
+                                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                <i class="fas fa-circle 
+                                                    @if ($user->is_block === config('const.active'))
+                                                        text-green-500
+                                                    @else
+                                                        text-red-500
+                                                    @endif mr-2"></i>
+                                                @if ($user->is_block === config('const.active'))
+                                                    {{ __('user.active') }}
+                                                @else
+                                                    {{ __('user.block') }}
+                                                @endif
+                                            </td>
+                                            <td class="px-6 whitespace-nowrap text-left text-sm font-medium">
+                                                <a href="" class="inline-block bg-yellow-500 hover:bg-yellow-700 text-white text-center py-1 px-3 rounded">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                                                <a data-id="{{ $user->id }}" class="btn-update-users bg-red-500 hover:bg-red-700 text-white text-center py-1 px-3 rounded">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @if ($users->hasPages())
+                                <hr class="my-4 md:min-w-full">
+                                <div class="px-6 pb-6">
+                                    {{ $users->links() }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-            @endforeach
+            </div>
         </div>
     </x-slot>
 </x-app-layout>

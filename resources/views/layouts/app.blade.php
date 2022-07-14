@@ -16,7 +16,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
+    <link rel="stylesheet" type="text/css" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
@@ -26,19 +27,26 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-blueGray-50">
         <!-- Page Heading -->
-        <div class="bg-gray-200 shadow flex">
+        <div class="bg-blueGray-50 shadow flex">
             <div class="max-w-7xl">
                 @include('layouts.navigation')
             </div>
             <!-- Page Content -->
-            <main class="w-full">
-                {{ $slot }}
+            <main class="w-full">   
+                <div class="relative md:ml-64 bg-blueGray-50 pt-40">
+                    {{ $slot }}
+                </div>
             </main>
         </div>
     </div>
+    <div class="px-4 md:ml-64 mx-auto -m-24 bg-blueGray-50">
+        @include('layouts.footer')
+    </div>
     @yield('js')
 </body>
-
+<script type='text/javascript'>
+    window.translations = {!! $translations !!};
+</script>
 </html>

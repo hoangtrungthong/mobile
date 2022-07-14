@@ -25,7 +25,7 @@ Route::group(['middleware' => ['role:admin','locale'] ], function () {
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::get('manage-user', [ManageUserController::class, 'index'])->name('manageUser');
-    Route::patch('{user}/block-user', [ManageUserController::class, 'blockUser'])->name('blockUser');
+    Route::any('{id}/block-user', [ManageUserController::class, 'blockUser'])->name('blockUser');
     Route::patch('{user}/active-user', [ManageUserController::class, 'activeUser'])->name('activeUser');
 
     Route::resource('categories', CategoryController::class);
