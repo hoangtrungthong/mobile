@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductImage;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -128,11 +129,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request)
     {
         try {
             DB::beginTransaction();
-
+            $category = Category::findOrFail($request->id);
             $parentCategory = $this->categoryRepository
                 ->whereId($category->parent)
                 ->first();

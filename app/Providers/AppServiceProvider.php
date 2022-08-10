@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         UserRepository $userRepository
     ) {
         if (!app()->runningInConsole()) {
-            $categories = $categoryRepository->whereParent(config('const.active'))->get();
+            $categories = $categoryRepository->whereParent(config('const.users.status.active'))->get();
 
             $notifications = $userRepository->getNotifications()->sortByDesc('created_at');
 

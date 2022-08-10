@@ -19,7 +19,7 @@ class RoleMiddleware
     {
         $role = Auth::user()->role->name;
 
-        if (!in_array($role, $roles) || Auth::user()->is_block === config('const.block')) {
+        if (!in_array($role, $roles) || Auth::user()->status === config('const.users.status.block')) {
             abort(401);
         }
 

@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        if (Auth::user()->is_block === config('const.block')) {
+        if (Auth::user()->status === config('const.users.status.block')) {
             return $this->destroy($request);
         }
 

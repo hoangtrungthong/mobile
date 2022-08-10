@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Contracts\Repositories\UserRepository;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ManageUserController extends Controller
 {
@@ -24,25 +26,47 @@ class ManageUserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
-    public function blockUser(User $user)
+    public function blockUser(Request $request)
     {
-        $user->update(
-            [
-                'is_block' => config('const.block'),
-            ]
-        );
+        User::where('id', $request->id)
+            ->update([
+                'status' => config('const.users.status.block'),
+            ]);
 
-        return redirect()->route('admin.manageUser');
+        return response()->json([
+            'data' => 'Update successfully',
+            'code' => Response::HTTP_OK,
+        ]);
     }
 
-    public function activeUser(User $user)
+    public function activeUser(Request $request)
     {
-        $user->update(
-            [
-                'is_block' => config('const.active'),
-            ]
-        );
+        User::where('id', $request->id)
+            ->update([
+                'status' => config('const.users.status.active'),
+            ]);
 
-        return redirect()->route('admin.manageUser');
+        return response()->json([
+            'data' => 'Update successfully',
+            'code' => Response::HTTP_OK,
+        ]);
+    }
+
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        if (!$user) {
+            return false;
+        }
+
+        $user->ratings()->forceDelete();
+        $user->comments()->forceDelete();
+        $user->orders()->forceDelete();
+        $user->forceDelete();
+        
+        return response()->json([
+            'data' => 'Delete successfully',
+            'code' => Response::HTTP_OK,
+        ]);
     }
 }

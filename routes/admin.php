@@ -25,12 +25,15 @@ Route::group(['middleware' => ['role:admin','locale'] ], function () {
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::get('manage-user', [ManageUserController::class, 'index'])->name('manageUser');
-    Route::any('{id}/block-user', [ManageUserController::class, 'blockUser'])->name('blockUser');
-    Route::patch('{user}/active-user', [ManageUserController::class, 'activeUser'])->name('activeUser');
+    Route::patch('block-user', [ManageUserController::class, 'blockUser'])->name('blockUser');
+    Route::patch('active-user', [ManageUserController::class, 'activeUser'])->name('activeUser');
+    Route::delete('delete-user/{id}', [ManageUserController::class, 'deleteUser'])->name('deleteUser');
 
     Route::resource('categories', CategoryController::class);
 
     Route::resource('products', ProductController::class);
+    Route::get("products/{slug}/updateNew", [ProductController::class, "continueAdd"])->name("continueAdd");
+    Route::patch("products/updateNew/{product}", [ProductController::class, "updateNew"])->name("updateNew");
 
     Route::resource('orders', OrderController::class)->only(['index', 'show', 'destroy']);
     Route::get('order-details/{id}', [OrderController::class, 'show'])->name('orderDetails');

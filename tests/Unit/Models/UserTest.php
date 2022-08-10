@@ -38,7 +38,7 @@ class UserTest extends ModelTestCase
                     'role_id',
                     'address',
                     'password',
-                    'is_block',
+                    'status',
                 ],
                 'hidden' => [
                     'password',

@@ -19,10 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthenticatedSessionController::class, 'apiLogin']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('orders/{id}', [OrderController::class, 'getApiDetailsOrder']);
-    Route::get('admin/orders', [OrderController::class, 'getApiAllOrder']);
-    Route::post('logout', [AuthenticatedSessionController::class, 'apiLogout']);
-    // Route::group(['middleware' => ['role:admin'], 'prefix' => 'admin' ], function () {
+    // Route::group(['middleware' => ['role:admin']], function () {
     //     Route::patch('{id}/block-user', [ManageUserController::class, 'blockUser'])->name('blockUser');
     // });
 });

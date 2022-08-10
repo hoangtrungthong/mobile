@@ -28,6 +28,22 @@
                                             <p class="text-red-500">{{ $message }}</p>
                                         @enderror
                                     </div>
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label for="payment_method"
+                                            class="block text-sm font-medium text-gray-700">{{ __('common.payment_method') }}</label>
+                                        @error('payment_method')
+                                            <p class="text-red-500">{{ $message }}</p>
+                                        @enderror
+                                          <select
+                                            name="payment_method"
+                                            id="payment_method"
+                                            class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                            aria-label="Default select example">
+                                            @foreach ($payment_methods as $item)
+                                                <option value="{{ $item->id }}">{{ $item->type }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <input type="hidden" name="user_id" value="{{ $user->id }}">
                                 </div>
                                 <div class="px-4 py-3 text-right sm:px-1">

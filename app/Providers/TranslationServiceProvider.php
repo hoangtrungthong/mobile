@@ -35,9 +35,9 @@ class TranslationServiceProvider extends ServiceProvider
     public function boot()
     {
         View::share('translations', collect(File::allFiles($this->langPath))->flatMap(function ($file) {
-                return [
-                    ($translation = $file->getBasename('.php')) => trans($translation),
-                ];
-            })->toJson());
+            return [
+                ($translation = $file->getBasename('.php')) => trans($translation),
+            ];
+        })->toJson());
     }
 }

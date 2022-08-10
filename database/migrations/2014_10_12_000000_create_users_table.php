@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->string('image')->nullable();
             $table->string('address');
-            $table->tinyInteger('is_block')->default(0)->comment('0: "active", 1: "block"');
+            $table->integer('status')->default(1)->comment('1: "active", 2: "block"');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

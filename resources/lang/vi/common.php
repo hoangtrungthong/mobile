@@ -32,6 +32,7 @@ return [
     'checkout'=> 'Thanh toán',
     'confirm' => 'Bạn có chắc muốn thanh toán luôn không ?',
     'empty' => 'Trống! Hãy thêm sản phẩm đi bạn hiền.',
+    'emptyCommon' => 'Trống!',
     'total' => 'Tổng',
     'time' => 'Thời gian',
     'continue' => 'Tiếp tục',
@@ -68,11 +69,16 @@ return [
     'empty_notify' => 'Hiện tại không có thông báo !',
     'report_sales' => ' Báo cáo doanh số bán hàng trong tháng ',
     'title_chart' => 'Biểu đồ thống kê doanh thu',
-    'status' => 'Đánh giá',
+    'status' => 'Trạng thái',
     'general' => [
         "wrong" => "Rất tiếc đã xảy ra lỗi!",
     ],
     'success' => [
         'update' => ' Cập nhật thành công',
-    ]
+    ],
+    'checkout_sucess' => "Đặt hàng thành công!",
+    "approved_order" => "Đơn hàng của bạn đã được admin xác nhận",
+    "payment_method" => "Phương thức thanh toán",
+    "export_price" => "Giá bán ra",
+    "import_price" => "Giá nhập vào"
 ];

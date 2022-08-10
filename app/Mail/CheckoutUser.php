@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderUser extends Mailable
+class CheckoutUser extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,16 +31,15 @@ class OrderUser extends Mailable
     public function build()
     {
         $user = $this->order->user;
-        return $this->to($this->order->user->email)
-            ->markdown(
-                'emails.order_user',
-                [
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'address' => $this->order->address,
-                    'phone' => $this->order->phone,
-                    'orderDetails' => $this->order->orderDetails,
-                ]
-            )->subject(__('email.order_success'));
+        return $this->markdown(
+            'emails.order_user',
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+                'address' => $this->order->address,
+                'phone' => $this->order->phone,
+                'orderDetails' => $this->order->orderDetails,
+            ]
+        )->subject(__('email.order_success'));
     }
 }

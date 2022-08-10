@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             ColorsTablesSeeder::class,
             MemoriesTablesSeeder::class,
+            PaymentMethodsTableSeeder::class,
         ]);
     }
 }

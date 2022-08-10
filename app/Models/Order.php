@@ -18,6 +18,7 @@ class Order extends Model
         'phone',
         'address',
         'status',
+        'payment_method',
     ];
 
     public function orderDetails()
@@ -28,5 +29,10 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
 }

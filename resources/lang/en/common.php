@@ -32,6 +32,7 @@ return [
     'checkout'=> 'Check out',
     'confirm' => 'Are you sure you want to pay?',
     'empty' => 'Empty! Please add product.',
+    'emptyCommon' => 'Empty!',
     'total' => 'Total',
     'time' => 'Time',
     'continue' => 'Continue',
@@ -74,5 +75,10 @@ return [
     ],
     'success' => [
         'update' => 'Update successfully',
-    ]
+    ],
+    'checkout_sucess' => "Checkout failed!",
+    "approved_order" => "Your order has been approved by admin",
+    "payment_method" => "Payment method",
+    "export_price"=> "Export price",
+    "import_price" => "Import price"
 ];

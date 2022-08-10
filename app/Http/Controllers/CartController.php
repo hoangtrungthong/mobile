@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\ProductAttributeRepository;
 use App\Contracts\Repositories\ProductRepository;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -139,7 +140,8 @@ class CartController extends Controller
     {
         $cart = Session::get('cart');
         $user = Auth::user();
+        $payment_methods = PaymentMethod::all();
 
-        return view('user.checkout', compact('cart', 'user'));
+        return view('user.checkout', compact('cart', 'user', 'payment_methods'));
     }
 }

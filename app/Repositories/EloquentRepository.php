@@ -3,7 +3,9 @@
 namespace App\Repositories;
 
 use App\Contracts\Repositories\Repository;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 abstract class EloquentRepository implements Repository
 {

@@ -7,6 +7,12 @@ return [
     'pagination' => 10,
     'block' => 1,
     'active' => 0,
+    'users' => [
+        'status' => [
+            'active' => 1,
+            'block' => 2,
+        ]
+    ],
     'memory' => [
         '8GB',
         '16GB',

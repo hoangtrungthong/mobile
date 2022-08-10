@@ -28,7 +28,7 @@ function showToast(content, timeout, type = 'success') {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
-    console.log(123123);
+
     switch (type) {
         case 'success':
             toastr.success(content);

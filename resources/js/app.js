@@ -2,6 +2,7 @@ require('./bootstrap');
 require('./preview');
 require('./append');
 require('./users');
+require('./category');
 require('./notifications');
 
 window.moment = require('moment');
