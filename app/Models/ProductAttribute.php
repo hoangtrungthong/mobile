@@ -18,7 +18,8 @@ class ProductAttribute extends Model
         'memory_id',
         'price',
         'quantity',
-        'export_price'
+        'export_price',
+        'sale_price'
     ];
 
     public function product()

@@ -34,6 +34,14 @@
                 </svg>
             </button>
         </div>
+        <style>
+            .home-list-category  {
+                display:none;
+            }
+            .nav-product:hover .home-list-category {
+                display: block !important;
+            }
+        </style>
         <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20"
             id="nav-content">
             <div class="list-reset lg:flex justify-end flex-1 items-center">
@@ -42,24 +50,27 @@
                 </x-home-nav-link>
                 <div class="group inline-block">
                     <div
-                        class="cursor-pointer outline-none focus:outline-none pl-3 pr-4 py-4 text-gray-200 rounded-sm flex items-center min-w-32">
+                        class="nav-product cursor-pointer outline-none focus:outline-none pl-3 pr-4 py-4 text-gray-200 rounded-sm flex items-center min-w-32">
                         <span class="pr-1 font-semibold flex-1">{{ __('common.product') }}</span>
                         <i
                             class="fas fa-angle-down fill-current h-4 w-4 transform group-hover:-rotate-180
                         transition duration-150 ease-in-out"></i>
                     </div>
                     <div
-                        class="gradient rounded-sm transform scale-0 group-hover:scale-100 absolute
+                        class="home-list-category gradient rounded-sm transform scale-0 group-hover:scale-100 absolute
                     transition duration-150 ease-in-out origin-top min-w-32">
-                        @foreach ($data['categories'] as $category)
-                            <a class="block pl-3 pr-4 py-4 cursor-pointer text-base font-medium text-gray-200 hover:text-gray-800 hover:bg-gray-50 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out" href="{{ route('category', $category->slug) }}">
-                                {{ $category->name }}
-                            </a>
-                        @endforeach
+                        @if (session('categories'))
+                            @foreach (session('categories') as $category)
+                                <a class="block pl-3 pr-4 py-4 cursor-pointer text-base font-medium text-gray-200 hover:text-gray-800 hover:bg-gray-50 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out"
+                                    href="{{ route('category', $category->slug) }}">
+                                    {{ $category->name }}
+                                </a>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 <x-home-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
-                    <i class="fas fa-shopping-cart"></i>
+                    {{ __('common.cart') }}
                     @if (session('cart'))
                         {{ count(session('cart')) }}
                     @endif
@@ -75,8 +86,7 @@
                             <div class="sub-user rounded-md absolute w-full top-full">
                                 <a class="block pl-3 pr-4 py-4 text-base font-medium text-gray-200 hover:text-gray-800 hover:bg-gray-50 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out"
                                     href="{{ route('user.profile') }}">{{ __('common.profile') }}</a>
-                                <x-home-nav-link :href="route('user.historyOrder')"
-                                    :active="request()->routeIs('user.historyOrder')">
+                                <x-home-nav-link :href="route('user.historyOrder')" :active="request()->routeIs('user.historyOrder')">
                                     {{ __('common.purchase') }}
                                 </x-home-nav-link>
                                 <form
@@ -100,9 +110,33 @@
                         @endif
                     @endauth
                 @endif
-                <div class="uppercase position-absolute top-0 left-0 font-semibold text-gray-800 dark:text-white">
-                    <a class="hover:underline text-gray-600" href="{!! route('user.lang', ['vi']) !!}">{{ __('vi') }} |</a>
-                    <a class="hover:underline text-gray-600" href="{!! route('user.lang', ['en']) !!}">{{ __('en') }}</a>
+                <div class="border bg-white rounded-xl cursor-pointer mr-2"
+                    x-data="{ open: false }">
+                    <div class="p-2 flex items-center justify-between w-full relative" @click="open = !open">
+                        <div class="flex gap-3 items-end">
+                            <img class="flag-image"
+                                src="{{ app()->getLocale() == 'vi' ? asset('images/vietnam.png') : asset('images/united-kingdom.png') }}"
+                                alt="">
+                            <span class="text-xs uppercase font-bold text-blueGray-700">
+                                {{ app()->getLocale() == 'vi' ? 'VI' : 'EN' }}
+                            </span>
+                        </div>
+                    </div>
+                    <ul class="border rounded-xl p-2 absolute bg-white" x-show="open"
+                        @click.away="open = false">
+                        <li class="mb-4">
+                            <a class="flex items-end gap-3" href="{!! route('user.lang', ['vi']) !!}">
+                                <img class="flag-image" src="{{ asset('images/vietnam.png') }}" alt="">
+                                <span class="text-xs uppercase font-bold text-blueGray-700">VI</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-end gap-3" href="{!! route('user.lang', ['en']) !!}">
+                                <img class="flag-image" src="{{ asset('images/united-kingdom.png') }}" alt="">
+                                <span class="text-xs uppercase font-bold text-blueGray-700">EN</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

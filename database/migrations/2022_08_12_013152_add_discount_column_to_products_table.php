@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddImportPriceColumnToProductAttributesTable extends Migration
+class AddDiscountColumnToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddImportPriceColumnToProductAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::table('product_attributes', function (Blueprint $table) {
-            $table->integer('export_price')->after('price');
+        Schema::table('products', function (Blueprint $table) {
+            $table->integer('discount')->default(0)->after('specifications');
         });
     }
 
@@ -25,8 +25,8 @@ class AddImportPriceColumnToProductAttributesTable extends Migration
      */
     public function down()
     {
-        Schema::table('product_attributes', function (Blueprint $table) {
-            $table->dropColumn('export_price');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('discount');
         });
     }
 }

@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
             ColorsTablesSeeder::class,
             MemoriesTablesSeeder::class,
             PaymentMethodsTableSeeder::class,
+            CategoriesTableSeeder::class,
+            ProductsTableSeeder::class,
+            ProductAttributesTableSeeder::class,
+            ProductImagesTableSeeder::class,
         ]);
     }
 }

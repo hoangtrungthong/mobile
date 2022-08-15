@@ -1,14 +1,17 @@
-require('./bootstrap');
-require('./preview');
-require('./append');
-require('./users');
-require('./category');
-require('./notifications');
+require("./bootstrap");
+require("./preview");
+require("./append");
+require("./users");
+require("./category");
+require("./dashboard");
+require("./discount");
+require("./chart")
+require("./notifications");
 
-window.moment = require('moment');
-moment.relativeTimeThreshold('ss', 0);
+window.moment = require("moment");
+moment.relativeTimeThreshold("ss", 0);
 
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 

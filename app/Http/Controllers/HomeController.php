@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\CategoryRepository;
 use App\Contracts\Repositories\ProductRepository;
+use App\Models\Color;
+use App\Models\Memory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -20,9 +22,9 @@ class HomeController extends Controller
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function changeLang(Request $request)
+    public function changeLang($lang)
     {
-        Session::put('language', $request->language);
+        Session::put('language', $lang);
 
         return redirect()->back();
     }
@@ -35,6 +37,7 @@ class HomeController extends Controller
         $categories = $this->categoryRepository->with('childrenCategory')
             ->whereParent(config('const.active'))
             ->get();
+        session()->put("categories", $categories);
 
         return view('home', compact('products', 'categories'));
     }
@@ -60,6 +63,9 @@ class HomeController extends Controller
             ->whereSlug($slug)
             ->firstOrFail();
 
+        $colors = Color::whereIn('id', $product->productAttributes->pluck('color_id')->toArray())->get();
+        $memories = Memory::whereIn('id', $product->productAttributes->pluck('memory_id')->toArray())->get();
+
         $star1 = $product->ratings()->whereVote(config('const.one_stars'))->count() * config('const.percent');
         $star2 = $product->ratings()->whereVote(config('const.two_stars'))->count() * config('const.percent');
         $star3 = $product->ratings()->whereVote(config('const.three_stars'))->count() * config('const.percent');
@@ -76,6 +82,8 @@ class HomeController extends Controller
                     'star3',
                     'star4',
                     'star5',
+                    'colors',
+                    'memories'
                 ]
             )
         );

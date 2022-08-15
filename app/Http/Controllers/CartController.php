@@ -47,7 +47,7 @@ class CartController extends Controller
             $cart[$slug . $key] = [
                 'id' => $product->id,
                 'name' => $product->name . $key,
-                'price' => $attr->price,
+                'price' => $product->discount > 0 ? $attr->sale_price : $attr->export_price,
                 'color' => $attr->color_id,
                 'memory' => $attr->memory_id,
                 'quantity' => 1,
@@ -70,6 +70,8 @@ class CartController extends Controller
             if ($cart[$slug . $key]['quantity'] >= $attr->quantity) {
                 return redirect()->back()->with('alert', __('common.fail_order'));
             }
+            
+            $cart[$slug . $key]['price'] = $product->discount > 0 ? $attr-> sale_price : $attr->export_price;
 
             $cart[$slug . $key]['quantity']++;
 
@@ -80,7 +82,7 @@ class CartController extends Controller
             $cart[$slug . $key] = [
                 'id' => $product->id,
                 'name' => $product->name . $key,
-                'price' => $attr->price,
+                'price' => $product->discount > 0 ? $attr->sale_price : $attr->export_price,
                 'color' => $attr->color_id,
                 'memory' => $attr->memory_id,
                 'quantity' => 1,

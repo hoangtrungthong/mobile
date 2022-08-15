@@ -20,7 +20,7 @@ class ApprovedOrder extends Mailable
      * @return void
      */
     public function __construct(Order $order)
-    {dd($order);
+    {
         $this->order = $order;
     }
 

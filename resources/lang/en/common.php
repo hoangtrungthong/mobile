@@ -80,5 +80,19 @@ return [
     "approved_order" => "Your order has been approved by admin",
     "payment_method" => "Payment method",
     "export_price"=> "Export price",
-    "import_price" => "Import price"
+    "import_price" => "Import price",
+    "discount" => "Discount",
+    "sale_values_month" => "Sales value",
+    "since_last_month" => "Since last month",
+    "total_order" => "Total orders",
+    "total_customers" => "Total customers",
+    "customers" => "Customers",
+    "to" => "To",
+    "total_quantity" => "Total product quantity",
+    "total_sales" => "Sales value",
+    "new_products" => "New products",
+    "new_orders" => "New orders",
+    "start_date" => "Start date",
+    "end_date" => "End date",
+    "cart" => "Cart"
 ];

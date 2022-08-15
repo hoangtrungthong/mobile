@@ -18,12 +18,19 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" type="text/css" 
     href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
+    <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <!-- Charts -->
     <script src="{{ asset('js/Chart.js') }}"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/flowbite@1.5.2/dist/datepicker.js"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -35,8 +42,11 @@
             </div>
             <!-- Page Content -->
             <main class="w-full">   
-                <div class="relative md:ml-64 bg-blueGray-50 pt-40">
-                    {{ $slot }}
+                <div class="relative md:ml-64 bg-blueGray-50">
+                    @include('layouts.navbar_admin')
+                    <div class="pt-60">
+                        {{ $slot }}
+                    </div>
                 </div>
             </main>
         </div>

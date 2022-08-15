@@ -98,34 +98,35 @@
                     <div class="mt-4 lg:mt-0 lg:row-span-3">
                         <h2 class="sr-only">Product information</h2>
                         @php
-                            $price = array_unique($product->productAttributes->pluck('price')->toArray());
+                        if ($product->discount > 0) {
+                            $price = array_unique($product->productAttributes->pluck('sale_price')->toArray());
+                        } else {
+                            $price = array_unique($product->productAttributes->pluck('export_price')->toArray());
+                        }
                         @endphp
                         @foreach ($price as $p)
                             <p class="text-3xl text-gray-900">${{ number_format($p) }}</p>
                         @endforeach
 
-                        <form action="{{ route('user.addCart', $product->slug) }}" method="post"
-                            class="mt-10">
+                        <form action="{{ route('user.addCart', $product->slug) }}" method="post" class="mt-10">
                             @csrf
                             <div>
                                 <h3 class="text-sm text-gray-900 font-medium">{{ __('common.color') }}</h3>
                                 <fieldset class="mt-4">
                                     <div class="flex items-center space-x-3">
-                                        @foreach ($product->productAttributes as $items)
-                                            @foreach ($items->colors as $color)
-                                                <label
-                                                    class="-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none ring-gray-400">
-                                                    <input type="radio" name="color" value="{{ $color->id }}"
-                                                        class="absolute form-radio h-5 w-5">
-                                                    <p id="color-0-label" class="sr-only">
-                                                        {{ $color->name }}
-                                                    </p>
-                                                    <span aria-hidden="true"
-                                                        class="h-8 w-8 border border-black border-opacity-10 rounded-full"
-                                                        style="background: {{ $color->name }}">
-                                                    </span>
-                                                </label>
-                                            @endforeach
+                                        @foreach ($colors as $color)
+                                            <label
+                                                class="-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none ring-gray-400">
+                                                <input type="radio" name="color" value="{{ $color->id }}"
+                                                    class="absolute form-radio h-5 w-5">
+                                                <p id="color-0-label" class="sr-only">
+                                                    {{ $color->name }}
+                                                </p>
+                                                <span aria-hidden="true"
+                                                    class="h-8 w-8 border border-black border-opacity-10 rounded-full"
+                                                    style="background: {{ $color->name }}">
+                                                </span>
+                                            </label>
                                         @endforeach
                                 </fieldset>
                             </div>
@@ -135,17 +136,14 @@
                                 </div>
                                 <fieldset class="mt-4">
                                     <div class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                                        @foreach ($product->productAttributes as $items)
-                                            @foreach ($items->memories as $memory)
-                                                <label id="memory_id" for="mem{{ $memory->id }}"
-                                                    class="text-black">
-                                                    <p id="mem{{ $memory->id }}">
-                                                        {{ $memory->rom }}
-                                                        <input type="radio" id="memory{{ $memory->id }}"
-                                                            name="memory" value="{{ $memory->id }}">
-                                                    </p>
-                                                </label>
-                                            @endforeach
+                                        @foreach ($memories as $memory)
+                                            <label id="memory_id" for="mem{{ $memory->id }}" class="text-black">
+                                                <p id="mem{{ $memory->id }}">
+                                                    {{ $memory->rom }}
+                                                    <input type="radio" id="memory{{ $memory->id }}" name="memory"
+                                                        value="{{ $memory->id }}">
+                                                </p>
+                                            </label>
                                         @endforeach
                                     </div>
                                 </fieldset>
@@ -191,23 +189,28 @@
                                         <div class="flex text-sm font-medium text-gray-700">
                                             <h3>{{ __('common.ratings') }}</h3>
                                             <div class="rating">
-                                                <input type="radio" id="star5" name="vote" value="5" />
+                                                <input type="radio" id="star5" name="vote"
+                                                    value="5" />
                                                 <label class="relative" for="star5">
                                                     <i class="fas fa-star"></i>
                                                 </label>
-                                                <input type="radio" id="star4" name="vote" value="4" />
+                                                <input type="radio" id="star4" name="vote"
+                                                    value="4" />
                                                 <label for="star4">
                                                     <i class="fas fa-star"></i>
                                                 </label>
-                                                <input type="radio" id="star3" name="vote" value="3" />
+                                                <input type="radio" id="star3" name="vote"
+                                                    value="3" />
                                                 <label for="star3">
                                                     <i class="fas fa-star"></i>
                                                 </label>
-                                                <input type="radio" id="star2" name="vote" value="2" />
+                                                <input type="radio" id="star2" name="vote"
+                                                    value="2" />
                                                 <label for="star2">
                                                     <i class="fas fa-star"></i>
                                                 </label>
-                                                <input type="radio" id="star1" name="vote" value="1" />
+                                                <input type="radio" id="star1" name="vote"
+                                                    value="1" />
                                                 <label for="star1">
                                                     <i class="fas fa-star"></i>
                                                 </label>
@@ -257,9 +260,13 @@
             </div>
         </div>
         <script>
-            {!! $product->productAttributes !!}.forEach(el => {
-                el.memories.forEach(element => {
+            window.show_colors = {!! $product->productAttributes !!}
+            // {!! $product->productAttributes !!}.forEach(el => {
+            //     el.memories.forEach(element => {
                     $(document).ready(function() {
+                        console.log($("input"));
+                        $("input[name='color']").click(function () {
+                        })
                         $("#memory_id").attr('for', function(index, value) {
                             console.log(this, $("#mem" + element.id), value, 'memory' + element
                                 .id, element);
@@ -272,8 +279,8 @@
                             return value = 'mem' + element.id
                         });
                     });
-                });
-            });
+            //     });
+            // });
         </script>
         @if (session()->has('alert'))
             <script type="text/javascript">

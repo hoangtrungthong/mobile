@@ -89,7 +89,7 @@ class OrderController extends Controller
                     "quantity" => $productAttr->quantity - $item["quantity"]
                 ]);
             }
-            
+
             foreach ($cart as $value) {
                 $amount += $value['price'] * $value['quantity'];
             }
@@ -134,10 +134,10 @@ class OrderController extends Controller
             ];
 
             // send notify admin
-            $admin->notify(new OrderAdminNotification($orderData));
+            // $admin->notify(new OrderAdminNotification($orderData));
 
             // send mail for user
-            dispatch(new SendEmailForApproveOrder($order));
+            // dispatch(new SendEmailForApproveOrder($order));
             // Mail::to($order->user->email)
             //     ->send(new OrderUser($order));
 

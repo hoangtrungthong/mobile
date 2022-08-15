@@ -9,7 +9,7 @@ body {
 }
 
 a {
-    background-color: transparent
+    background-color: transparent;
 }
 
 [hidden] {
@@ -30,13 +30,14 @@ html {
 
 a {
     color: inherit;
-    text-decoration: inherit
+    text-decoration: inherit;
+    cursor: pointer;
 }
 
 svg,
 video {
     display: block;
-    vertical-align: middle
+    vertical-align: middle;
 }
 
 video {

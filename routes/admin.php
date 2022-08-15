@@ -34,6 +34,8 @@ Route::group(['middleware' => ['role:admin','locale'] ], function () {
     Route::resource('products', ProductController::class);
     Route::get("products/{slug}/updateNew", [ProductController::class, "continueAdd"])->name("continueAdd");
     Route::patch("products/updateNew/{product}", [ProductController::class, "updateNew"])->name("updateNew");
+    Route::get("discount", [ProductController::class, "discountList"])->name("discountList");
+    Route::patch("discount/{id}", [ProductController::class, "discount"])->name("discount");
 
     Route::resource('orders', OrderController::class)->only(['index', 'show', 'destroy']);
     Route::get('order-details/{id}', [OrderController::class, 'show'])->name('orderDetails');

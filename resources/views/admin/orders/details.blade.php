@@ -85,7 +85,7 @@
                                                             </td>
                                                             <td class="text-center px-6 py-4">
                                                                 <p class="bg-green-300 p-1 text-white">
-                                                                    {{ $item->price * $item->quantity }}
+                                                                    {{ number_format($item->price * $item->quantity) . " đ" }}
                                                                 </p>
                                                             </td>
                                                         </tr>
@@ -97,11 +97,8 @@
                                                     @endforeach
                                                     <tr class="text-center text-white bg-gray-800">
                                                         <th colspan="6"></th>
-                                                        {{-- <td class="text-sm font-bold">
-                                                            <b>{{ __('common.total') }}</b>
-                                                        </td> --}}
                                                         <td class="text-sm font-bold">
-                                                            <b>{{ number_format($total) }}</b>
+                                                            <b>{{ number_format($total) . " đ" }}</b>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -118,7 +115,7 @@
                                         @if ($orderDetails[0]->order->status == config('const.approve') ||
                                             $orderDetails[0]->order->status == config('const.reject'))
                                             <p
-                                                class="py-2 px-4 mr-10 rounded text-white text-xs font-bold {{ $orderDetails[0]->order->status == config('const.reject') ? 'bg-red-400 px-7' : 'bg-green-400 ' }} ">
+                                                class="items-center gap-2 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0 rounded text-white text-xs font-bold {{ $orderDetails[0]->order->status == config('const.reject') ? 'bg-red-400 px-7' : 'bg-green-400 ' }} ">
                                                 {{ $orderDetails[0]->order->status == config('const.reject') ? __('common.rejected') : __('common.accepted') }}
                                             </p>
                                         @else

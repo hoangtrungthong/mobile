@@ -6,7 +6,7 @@
 .sub-user {
     background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
     min-width: 250px;
-    left: 200%;
+    left: 220%;
     transition: all 0.5s;
     z-index: -1;
 }
@@ -101,8 +101,8 @@
 }
 
 .swiper-slide:hover img {
-    transform: rotate(45deg);
-    transition: all 0.6s;
+    /* transform: rotate(45deg);
+    transition: all 0.6s; */
 }
 
 .swiper-container {
@@ -379,6 +379,10 @@
 .rating>label:hover~input:checked~label,
 .rating>input:checked~label:hover~label {
     color: #FFED85;
+}
+
+a, li {
+  cursor: pointer;
 }
 
 li>ul {

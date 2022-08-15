@@ -1,17 +1,88 @@
 <x-app-layout>
     <x-slot name="slot">
-        <div class="px-4 md:px-10 mx-auto w-full -m-24">
+        <div class="px-4 md:px-10 mx-auto w-full -m-24" style="margin-top: -150px">
             <div class="flex flex-wrap mt-4">
                 <div class="w-full mb-12 px-4">
                     <div class="block w-full overflow-x-auto">
                         <div class="md:flex md:items-center mt-12 bg-white rounded-xl p-6">
                             <div class="flex justify-between flex-wrap gap-28 w-full">
                                 <div class="max-w-full">
-                                    <div class="grid grid-cols-4">
-                                        @foreach ($product->productImages as $img)
-                                            <img class="col-span-2 max-w-full h-60 p-6 rounded-md object-cover max-w-lg mx-auto"
-                                                src="{{ Storage::url($img->path) }}" alt="Image">
-                                        @endforeach
+                                    <!-- Swiper -->
+                                    <style>
+                                        .gallery {
+                                            width: 100%;
+                                            max-width: 200px;
+                                            margin: 10px auto;
+                                            overflow: hidden
+                                        }
+
+                                        .gallery-slider {
+                                            width: 100%;
+                                            height: auto;
+                                            margin: 0 0 10px 0;
+                                        }
+
+                                        .gallery .swiper-container {
+                                            padding-top: 0
+                                        }
+
+                                        .gallery-slider .swiper-slide {
+                                            width: auto;
+                                            height: 200px;
+                                        }
+
+                                        .gallery-slider .swiper-slide img {
+                                            display: block;
+                                            width: auto;
+                                            height: auto;
+                                            margin: 0 auto;
+                                        }
+
+                                        .gallery-thumbs {
+                                            width: 100%;
+                                            padding: 0;
+                                            overflow: hidden;
+                                        }
+
+                                        .gallery-thumbs .swiper-slide {
+                                            width: 100px;
+                                            height: 100px;
+                                            text-align: center;
+                                            overflow: hidden;
+                                            opacity: 0.1;
+                                        }
+
+                                        .gallery-thumbs .swiper-slide-active {
+                                            opacity: 1;
+                                        }
+
+                                        .gallery-thumbs .swiper-slide img {
+                                            width: auto;
+                                            height: 100%;
+                                        }
+                                    </style>
+                                    <div>
+                                        <div class="gallery">
+                                            <div class="swiper-container gallery-slider">
+                                                <div class="swiper-wrapper">
+                                                    @foreach ($product->productImages as $img)
+                                                        <div class="swiper-slide">
+                                                            <img src="{{ Storage::url($img->path) }}" alt="">
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+
+                                            <div class="swiper-container gallery-thumbs">
+                                                <div class="swiper-wrapper">
+                                                    @foreach ($product->productImages as $img)
+                                                        <div class="swiper-slide">
+                                                            <img src="{{ Storage::url($img->path) }}" alt="">
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <hr class="my-3">
                                     <div>
@@ -51,6 +122,9 @@
                                                                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                                                                 {{ __('common.quantity') }}
                                                             </th>
+                                                            <th
+                                                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                            </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -78,11 +152,11 @@
                                                                 @endforeach
                                                                 <td
                                                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                                                    {{ $attr->price }}
+                                                                    {{ number_format($attr->price) }}đ
                                                                 </td>
                                                                 <td
                                                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                                                    {{ $attr->export_price }}
+                                                                    {{ number_format($attr->export_price) }}đ
                                                                 </td>
                                                                 <td
                                                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -115,4 +189,37 @@
             </div>
         </div>
     </x-slot>
+    @section('js')
+        <!-- Initialize Swiper -->
+        <script type="text/javascript">
+            //メインスライド
+            var slider = new Swiper('.gallery-slider', {
+                slidesPerView: 1,
+                centeredSlides: true,
+                loop: true,
+                loopedSlides: 6, //スライドの枚数と同じ値を指定
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+
+            //サムネイルスライド
+            var thumbs = new Swiper('.gallery-thumbs', {
+                slidesPerView: 'auto',
+                spaceBetween: 10,
+                centeredSlides: true,
+                loop: true,
+                slideToClickedSlide: true,
+            });
+
+            //3系
+            //slider.params.control = thumbs;
+            //thumbs.params.control = slider;
+
+            //4系～
+            slider.controller.control = thumbs;
+            thumbs.controller.control = slider;
+        </script>
+    @endsection
 </x-app-layout>

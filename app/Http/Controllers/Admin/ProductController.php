@@ -59,9 +59,10 @@ class ProductController extends Controller
         int $newQuantity
     ) {
         $price = 0;
-        if ($oldPrice < $newPrice) {
-           
+        if ($oldPrice < $newPrice && $oldPrice > 0) {
             $price = $newPrice + (($oldPrice * $oldQuantity) + ($newPrice * $newQuantity)) / ($oldQuantity + $newQuantity);
+        } elseif($oldPrice == 0) {
+            $price = $newPrice + ($newPrice * 30) / 100;
         } else {
             $price = $oldPrice + ($oldPrice * 30) / 100;
         }
@@ -226,6 +227,7 @@ class ProductController extends Controller
 
             $ids = $product->productAttributes->pluck('id')->toArray();
             foreach ($request->quantity as $key => $item) {
+                $attr = ProductAttribute::findOrFail($ids[$key]);
                 $product->productAttributes()
                     ->where('id', $ids[$key])
                     ->update(
@@ -234,6 +236,7 @@ class ProductController extends Controller
                             'color_id' => $request->color_id[$key],
                             'memory_id' => $request->memory_id[$key],
                             'price' => $request->price[$key],
+                            'export_price' => $this->calculatePrice($attr->price, $attr->quantity, $request->price[$key], $item),
                         ]
                     );
             };
@@ -274,23 +277,27 @@ class ProductController extends Controller
                     ->where("memory_id", $request->memory_id[$key])
                     ->first();
 
+                $export_price = $this->calculatePrice($oldPrice[$key], $oldQuantity[$key], $request->price[$key], $item);
                 if ($productAttr) {
                     $productAttr->update(
                         [
                             'quantity' => $productAttr->quantity + $item,
                             'price' => $request->price[$key],
-                            'export_price' => $this->calculatePrice($oldPrice[$key], $oldQuantity[$key], $request->price[$key], $item),
+                            'export_price' => $export_price,
+                            'sale_price' => $product->discount > 0 ? ($export_price - ($export_price * $product->discount)) : 0,
                             'updated_at' => Carbon::now(),
                         ]
                     );
                 } else {
+                    $export_price_for_insert = $this->calculatePrice(0, 0, $request->price[$key], $item);
                     $dataForInsert[] = [
                         'product_id' => $product->id,
                         'quantity' => $item,
                         'color_id' => $request->color_id[$key],
                         'memory_id' => $request->memory_id[$key],
                         'price' => $request->price[$key],
-                        'export_price' => $this->calculatePrice(0, 0, $request->price[$key], $item),
+                        'export_price' => $export_price_for_insert,
+                        'sale_price' => $product->discount > 0 ? ($export_price_for_insert - ($export_price_for_insert * $product->discount) / 100) : 0,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
@@ -370,5 +377,31 @@ class ProductController extends Controller
                 ]
             )
         );
+    }
+
+    public function discountList()
+    {
+        $num = config('const.block');
+        $products = $this->productRepository->getAllProduct();
+
+        return view('admin.products.discount', compact(['products', 'num']));
+    }
+
+    public function discount(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->update([
+           "discount" => $request->discount 
+        ]);
+        if ($request->discount > 0) {
+            foreach ($product->productAttributes as $attr) {
+                $discount = ($attr->export_price * $request->discount) / 100;
+                $attr->update([
+                    "sale_price" => $request->discount > 0 ? ceil($attr->export_price - $discount) : 0,
+                ]);
+            }
+        }
+
+        return redirect()->back()->with("discountSuccess", "discount successfully");
     }
 }

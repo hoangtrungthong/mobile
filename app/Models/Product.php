@@ -18,6 +18,7 @@ class Product extends Model
         'slug',
         'content',
         'specifications',
+        "discount"
     ];
 
     public function category()

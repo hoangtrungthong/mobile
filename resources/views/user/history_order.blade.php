@@ -118,7 +118,7 @@
                                 @else
                                     <tr>
                                         <td class="text-center px-6 py-3 text-sm font-medium text-gray-500 whitespace-nowrap"
-                                            colspan="7">
+                                            colspan="9">
                                             {{ __('common.empty') }}
                                         </td>
                                     </tr>

@@ -64,5 +64,9 @@ input[type="file"] {
 }
 
 #count-notify {
-    right: 40%;
+    right: 0;
+}
+
+a, li {
+    cursor: pointer;
 }
