@@ -21,3 +21,9 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
+    
+Route::get('/redirect-google', [AuthenticatedSessionController::class, 'redirectGoogle'])
+    ->name("redirectGoogle");
+
+Route::get('/google_callback', [AuthenticatedSessionController::class, 'processGoogleLogin'])
+    ->name("redirectGoogle");

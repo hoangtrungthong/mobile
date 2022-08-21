@@ -94,5 +94,7 @@ return [
     "new_orders" => "New orders",
     "start_date" => "Start date",
     "end_date" => "End date",
-    "cart" => "Cart"
+    "cart" => "Cart",
+    "or" => "Or login via",
+    "filter" => "Filter"
 ];

@@ -93,5 +93,7 @@ return [
     "new_orders" => "Đơn hàng mới nhất",
     "start_date" => "Ngày bắt đầu",
     "end_date" => "Ngày kết thúc",
-    "cart" => "Giỏ hàng"
+    "cart" => "Giỏ hàng",
+    "or" => "Hoặc đăng nhập bằng",
+    "filter" => "Lọc"
 ];

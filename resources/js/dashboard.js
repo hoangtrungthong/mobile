@@ -10,5 +10,4 @@ $(document).ready(function () {
         })
         .addClass("text-pink-500 hover:text-pink-600")
         .removeClass("text-blueGray-700 hover:text-blueGray-500");
-
 });

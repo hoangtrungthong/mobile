@@ -48,7 +48,7 @@
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('common.login') }}
                 </a>
-                <x-button id="register" class="ml-4">
+                <x-button id="register" class="ml-4 gradient">
                     {{ __('common.register') }}
                 </x-button>
             </div>

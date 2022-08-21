@@ -7,6 +7,7 @@ use App\Contracts\Repositories\OrderDetailRepository;
 use App\Contracts\Repositories\OrderRepository;
 use App\Contracts\Repositories\ProductAttributeRepository;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Rating;
 use Carbon\Carbon;
@@ -159,7 +160,38 @@ class DashboardController extends Controller
         );
     }
 
-    public function filterChart(Request $request)
+    public function chartOrder(Request $request)
     {
+        return Order::whereDate("updated_at", ">=", $request->start_date)
+            ->whereDate("updated_at", "<=", $request->end_date)
+            ->whereNull("deleted_at")
+            ->whereStatus(config('const.approve'))
+            ->get()
+            ->groupBy(
+                function ($date) {
+                    return $date->updated_at->format('d-m-Y');
+                }
+            )->map(
+                function ($item) {
+                    return array_sum($item->pluck('amount')->toArray());
+                }
+            )->toArray();
+    }
+
+    public function chartProduct(Request $request)
+    {
+        return Product::whereDate("updated_at", ">=", $request->start_date)
+            ->whereDate("updated_at", "<=", $request->end_date)
+            ->whereNull("deleted_at")
+            ->get()
+            ->groupBy(
+                function ($date) {
+                    return $date->updated_at->format('d-m-Y');
+                }
+            )->map(
+                function ($item) {
+                    return array_sum($item->pluck('quantity')->toArray());
+                }
+            )->toArray();
     }
 }

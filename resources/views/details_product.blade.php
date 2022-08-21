@@ -105,7 +105,7 @@
                         }
                         @endphp
                         @foreach ($price as $p)
-                            <p class="text-3xl text-gray-900">${{ number_format($p) }}</p>
+                            <p class="text-3xl text-gray-900">{{ number_format($p) }}đ</p>
                         @endforeach
 
                         <form action="{{ route('user.addCart', $product->slug) }}" method="post" class="mt-10">
@@ -260,25 +260,10 @@
             </div>
         </div>
         <script>
-            window.show_colors = {!! $product->productAttributes !!}
+            window.product_attr = {!! $product->productAttributes !!}
             // {!! $product->productAttributes !!}.forEach(el => {
             //     el.memories.forEach(element => {
-                    $(document).ready(function() {
-                        console.log($("input"));
-                        $("input[name='color']").click(function () {
-                        })
-                        $("#memory_id").attr('for', function(index, value) {
-                            console.log(this, $("#mem" + element.id), value, 'memory' + element
-                                .id, element);
-                            if (value == 'mem' + element.id) {
-                                $("#mem" + element.id).remove();
-
-                                return $("#memory_id").attr('style', 'display: none');
-                            }
-
-                            return value = 'mem' + element.id
-                        });
-                    });
+                    
             //     });
             // });
         </script>

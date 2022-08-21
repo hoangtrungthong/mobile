@@ -16,8 +16,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" type="text/css" 
-    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -41,7 +41,7 @@
                 @include('layouts.navigation')
             </div>
             <!-- Page Content -->
-            <main class="w-full">   
+            <main class="w-full">
                 <div class="relative md:ml-64 bg-blueGray-50">
                     @include('layouts.navbar_admin')
                     <div class="pt-60">
@@ -59,4 +59,5 @@
 <script type='text/javascript'>
     window.translations = {!! $translations !!};
 </script>
+
 </html>

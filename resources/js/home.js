@@ -1,27 +1,27 @@
-var navMenuDiv = document.getElementById("nav-content");
+// var navMenuDiv = document.getElementById("nav-content");
 var navMenu = document.getElementById("nav-toggle");
 
-document.onclick = check;
+// document.onclick = check;
 
-function check(e) {
-    var target = (e && e.target) || (event && event.srcElement);
+// function check(e) {
+//     var target = (e && e.target) || (event && event.srcElement);
 
-    //Nav Menu
-    if (!checkParent(target, navMenuDiv)) {
-        // click NOT on the menu
-        if (checkParent(target, navMenu)) {
-            // click on the link
-            if (navMenuDiv.classList.contains("hidden")) {
-                navMenuDiv.classList.remove("hidden");
-            } else {
-                navMenuDiv.classList.add("hidden");
-            }
-        } else {
-            // click both outside link and outside menu, hide menu
-            navMenuDiv.classList.add("hidden");
-        }
-    }
-}
+//     //Nav Menu
+//     if (!checkParent(target, navMenuDiv)) {
+//         // click NOT on the menu
+//         if (checkParent(target, navMenu)) {
+//             // click on the link
+//             if (navMenuDiv.classList.contains("hidden")) {
+//                 navMenuDiv.classList.remove("hidden");
+//             } else {
+//                 navMenuDiv.classList.add("hidden");
+//             }
+//         } else {
+//             // click both outside link and outside menu, hide menu
+//             navMenuDiv.classList.add("hidden");
+//         }
+//     }
+// }
 
 function checkParent(t, elm) {
     while (t.parentNode) {
@@ -75,3 +75,53 @@ document.addEventListener("scroll", function () {
         navcontent.classList.add("bg-gray-100");
     }
 });
+// $(document).ready(function () {
+//     let attr = window.product_attr;
+//     let attrs = [];
+
+//     attr.forEach(function (e) {
+//         e.memories.forEach((el) => {
+//             attrs.push({ color_id: parseInt(e.color_id), memory_id: el.id });
+//         });
+//     });
+
+//     $("input[name='color']").click(function (e) {
+//         var _tmp = $(this);
+//         attrs.forEach((el) => {
+//             if (_tmp.val() == el.color_id) {
+//                 $(`#memory${el.memory_id}`).prop("disabled", true);
+//                 $(`#memory${el.memory_id}`).prop("checked", false);
+//             } else {
+//                 $(`#memory${el.memory_id}`).prop("disabled", false);
+//             }
+//             // $(`#color${el.color_id}`).props("disabled", false);
+//             // console.log(el, _tmp.val());
+//             // if (el.includes(parseInt(_tmp.val()))) {
+//             //     el.forEach((v) => {
+//             //         console.log(v);
+//             //     });
+//             // }
+//         });
+//     });
+//     // attr.forEach(e => {
+//     //     e.colors.forEach((key, el) => {
+//     //         console.log(key, el);
+//     //     })
+//     // });
+//     $("#memory_id").attr("for", function (index, value) {
+//         console.log(
+//             this,
+//             $("#mem" + element.id),
+//             value,
+//             "memory" + element.id,
+//             element
+//         );
+//         if (value == "mem" + element.id) {
+//             $("#mem" + element.id).remove();
+
+//             return $("#memory_id").attr("style", "display: none");
+//         }
+
+//         return (value = "mem" + element.id);
+//     });
+// });

@@ -5,6 +5,7 @@ require("./users");
 require("./category");
 require("./dashboard");
 require("./discount");
+require("./home")
 require("./chart")
 require("./notifications");
 

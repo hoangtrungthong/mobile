@@ -159,7 +159,7 @@
                                             {{ __('common.total_sales') }}
                                         </h2>
                                     </div>
-                                    <div>
+                                    <form id="form-order">
                                         <div class="flex items-center">
                                             <div class="relative">
                                                 <div
@@ -173,9 +173,12 @@
                                                             clip-rule="evenodd"></path>
                                                     </svg>
                                                 </div>
-                                                <input datepicker datepicker-autohide datepicker-format="mm/dd/yyyy" id="start_date" name="start" type="text"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    placeholder="{{ __('common.start_date') }}">
+                                                <div id="div-start">
+                                                    <input max="{{ \Carbon\Carbon::today() }}" datepicker-format="mm/dd/yyyy"
+                                                        id="order_start_date" name="start" type="date"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="{{ __('common.start_date') }}">
+                                                </div>
                                             </div>
                                             <span class="mx-4 text-white">
                                                 {{ __('common.to') }}
@@ -192,12 +195,20 @@
                                                             clip-rule="evenodd"></path>
                                                     </svg>
                                                 </div>
-                                                <input datepicker datepicker-autohide datepicker-format="mm/dd/yyyy" id="end_date" name="end" type="text"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    placeholder="{{ __('common.end_date') }}">
+                                                <div id="div-end">
+                                                    <input max="{{ \Carbon\Carbon::today() }}"
+                                                        datepicker-format="mm/dd/yyyy" id="order_end_date"
+                                                        name="end" type="date"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="{{ __('common.end_date') }}">
+                                                </div>
                                             </div>
+                                            <button id="btn-filter_order"
+                                                class="bg-pink-500 hover:bg-pink-700 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0">
+                                                {{ __('common.filter') }}
+                                            </button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="p-8 flex-auto">
@@ -218,7 +229,7 @@
                                         </h2>
                                     </div>
                                     <div>
-                                        <div date-rangepicker class="flex items-center">
+                                        <form class="flex items-center">
                                             <div class="relative">
                                                 <div
                                                     class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -231,9 +242,13 @@
                                                             clip-rule="evenodd"></path>
                                                     </svg>
                                                 </div>
-                                                <input id="start_date" name="start" type="text"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    placeholder="{{ __('common.start_date') }}">
+                                                <div id="div-start1">
+                                                    <input max="{{ \Carbon\Carbon::today() }}"
+                                                        datepicker-format="mm/dd/yyyy" id="product_start_date"
+                                                        name="start" type="date"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="{{ __('common.start_date') }}">
+                                                </div>
                                             </div>
                                             <span class="mx-4 text-grey-500">
                                                 {{ __('common.to') }}
@@ -250,11 +265,19 @@
                                                             clip-rule="evenodd"></path>
                                                     </svg>
                                                 </div>
-                                                <input id="end_date" name="end" type="text"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    placeholder="{{ __('common.end_date') }}">
+                                                <div id="div-end1">
+                                                    <input max="{{ \Carbon\Carbon::today() }}"
+                                                        datepicker-format="mm/dd/yyyy" id="product_end_date"
+                                                        name="end" type="date"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="{{ __('common.end_date') }}">
+                                                </div>
                                             </div>
-                                        </div>
+                                            <button id="btn-filter_product"
+                                                class="bg-pink-500 hover:bg-pink-700 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0">
+                                                {{ __('common.filter') }}
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

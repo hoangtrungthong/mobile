@@ -1,5 +1,7 @@
+import { showToast } from "./helper";
+
 // chart sale order
-new Chart(document.getElementById("chart-sales"), {
+let chartOrder = new Chart(document.getElementById("chart-sales"), {
     type: "line",
     data: {
         labels: Object.keys(window.dataChartSales),
@@ -45,8 +47,8 @@ new Chart(document.getElementById("chart-sales"), {
     },
 });
 
-// chart quantity
-new Chart(document.getElementById("chart-quantity"), {
+// chart product quantity
+let chartProduct = new Chart(document.getElementById("chart-quantity"), {
     type: "line",
     data: {
         labels: Object.keys(window.dataChartQuantity),
@@ -118,3 +120,129 @@ function openDropdown(event, dropdownID) {
     document.getElementById(dropdownID).classList.toggle("hidden");
     document.getElementById(dropdownID).classList.toggle("block");
 }
+
+$(document).ready(function () {
+    $("input[type='date']").attr("max", new Date().toISOString().split("T")[0]);
+    $("#btn-filter_order").click(function (e) {
+        e.preventDefault();
+        $(".errorDate").empty();
+        let start = $("#order_start_date").val();
+        let end = $("#order_end_date").val();
+        let valid = false;
+
+        if (start == "") {
+            $("#div-start").append(
+                '<div class="errorDate text-teal-500">Không được để trống</div>'
+            );
+            valid = true;
+        }
+
+        if (end == "") {
+            $("#div-end").append(
+                '<div class="errorDate text-teal-500">Không được để trống</div>'
+            );
+            valid = true;
+        }
+
+        if (Date.parse(start) > Date.parse(end)) {
+            $("#div-start").append(
+                `<div class="errorDate text-teal-500">Phải nhỏ hơn ngày kết thúc</div>`
+            );
+            $("#div-end").append(
+                `<div class="errorDate text-teal-500">Phải lớn hơn ngày bắt đầu</div>`
+            );
+            valid = true;
+        }
+
+        if (valid) {
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "orders/chart",
+            data: {
+                start_date: start,
+                end_date: end,
+            },
+        })
+            .done(function (results) {
+                if (checkObj(results)) {
+                    chartOrder.data.labels = Object.keys(results);
+                    chartOrder.data.datasets[0].data = Object.values(results);
+                    chartOrder.update();
+                } else {
+                    showToast("Không có dữ liệu để hiển thị!", 3000, "error");
+                }
+            })
+            .fail(function (errors) {
+                showToast("Có lỗi xảy ra!", 3000, "error");
+            });
+    });
+
+    $("#btn-filter_product").click(function (e) {
+        e.preventDefault();
+        $(".errorDate").empty();
+        let start = $("#product_start_date").val();
+        let end = $("#product_end_date").val();
+        let valid = false;
+
+        if (start == "") {
+            $("#div-start1").append(
+                '<div class="errorDate text-teal-500">Không được để trống</div>'
+            );
+            valid = true;
+        }
+
+        if (end == "") {
+            $("#div-end1").append(
+                '<div class="errorDate text-teal-500">Không được để trống</div>'
+            );
+            valid = true;
+        }
+
+        if (Date.parse(start) > Date.parse(end)) {
+            $("#div-start1").append(
+                `<div class="errorDate text-teal-500">Phải nhỏ hơn ngày kết thúc</div>`
+            );
+            $("#div-end1").append(
+                `<div class="errorDate text-teal-500">Phải lớn hơn ngày bắt đầu</div>`
+            );
+            valid = true;
+        }
+
+        if (valid) {
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "products/chart",
+            data: {
+                start_date: start,
+                end_date: end,
+            },
+        })
+            .done(function (results) {
+                if (checkObj(results)) {
+                    chartProduct.data.labels = Object.keys(results);
+                    chartProduct.data.datasets[0].data = Object.values(results);
+                    chartProduct.update();
+                } else {
+                    showToast("Không có dữ liệu để hiển thị!", 3000, "error");
+                }
+            })
+            .fail(function (errors) {
+                showToast("Có lỗi xảy ra!", 3000, "error");
+            });
+    });
+
+    function checkObj(obj) {
+        return (
+            obj &&
+            obj !== "null" &&
+            obj !== "undefined" &&
+            Object.keys(obj).length !== 0
+        );
+    }
+});

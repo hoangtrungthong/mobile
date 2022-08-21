@@ -23,5 +23,14 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make(config('admin.password')),
             'role_id' => config('const.admin'),
         ]);
+        
+        User::create([
+            'name' => "Hoàng Trung Thông",
+            'email' => "hoangtrungthong0000@gmail.com",
+            'phone' => "0345236493",
+            'address' => "Chùa Thầy, Sài Sơn, Quốc Oai",
+            'password' => Hash::make("123123"),
+            'role_id' => config('const.user'),
+        ]);
     }
 }

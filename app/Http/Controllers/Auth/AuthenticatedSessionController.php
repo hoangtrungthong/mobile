@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Nette\InvalidStateException;
+use Socialite;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -86,5 +89,42 @@ class AuthenticatedSessionController extends Controller
     public function apiLogout()
     {
         auth()->user()->currentAccessToken()->delete();
+    }
+
+    public function redirectGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function processGoogleLogin()
+    {
+        try {
+            $user = Socialite::driver('google')->user();
+        } catch (\Exception $e) {
+            return redirect()->route("login")->with('error', 'Try after some time');
+        }
+        
+        
+        if (!$user) {
+            return redirect()->route("login");
+        }
+
+        $existUser = User::firstOrCreate(
+            [
+                "google_id" => $user->id,
+            ],
+            [
+                "name" => 'google_' . $user->name,
+                "email" => $user->email,
+                "password" => '',
+                "phone" => null,
+                "address" => null,
+                "image" => $user->avatar
+            ]
+        );
+
+        Auth::loginUsingId($existUser->id);
+
+        return redirect()->route("home");
     }
 }

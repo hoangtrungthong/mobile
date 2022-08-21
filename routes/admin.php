@@ -23,6 +23,8 @@ Route::group(['middleware' => ['role:admin','locale'] ], function () {
     Route::get('language/{language}', [HomeController::class, 'changeLang'])->name('lang');
 
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('orders/chart', [DashboardController::class, 'chartOrder'])->name('chartOrder');
+    Route::get('products/chart', [DashboardController::class, 'chartProduct'])->name('chartProduct');
 
     Route::get('manage-user', [ManageUserController::class, 'index'])->name('manageUser');
     Route::patch('block-user', [ManageUserController::class, 'blockUser'])->name('blockUser');
