@@ -29,7 +29,6 @@ window.Echo = new Echo({
     forceTLS: true
 });
 
-
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {

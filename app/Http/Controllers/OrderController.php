@@ -15,6 +15,7 @@ use App\Mail\OrderUser;
 use App\Models\Order;
 use App\Notifications\OrderAdminNotification;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -44,8 +45,16 @@ class OrderController extends Controller
     public function index()
     {
         $orders = $this->orderRepository->getAllOrders();
+        $status = [
+            'approve' => 1,
+            'reject' => 2,
+            'processing' => 3,
+            'cancel' => 4,
+            'refund' => 5,
+            'completed' => 6,
+        ];
 
-        return view('admin.orders.index', compact('orders'));
+        return view('admin.orders.index', compact('orders', 'status'));
     }
 
     public function show($id)
@@ -134,12 +143,12 @@ class OrderController extends Controller
             ];
 
             // send notify admin
-            // $admin->notify(new OrderAdminNotification($orderData));
+            $admin->notify(new OrderAdminNotification($orderData));
 
             // send mail for user
-            // dispatch(new SendEmailForApproveOrder($order));
-            // Mail::to($order->user->email)
-            //     ->send(new OrderUser($order));
+            dispatch(new SendEmailForApproveOrder($order));
+            Mail::to($order->user->email)
+                ->send(new OrderUser($order));
 
             DB::commit();
 
@@ -256,6 +265,11 @@ class OrderController extends Controller
         }
     }
 
+    public function actionStatusOrder(Request $request)
+    {
+        
+    }
+    
     public function getApiAllOrder()
     {
         if (Auth::user()->tokenCan('admin:view')) {

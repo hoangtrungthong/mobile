@@ -96,5 +96,16 @@ return [
     "end_date" => "End date",
     "cart" => "Cart",
     "or" => "Or login via",
-    "filter" => "Filter"
+    "filter" => "Filter",
+    "update_status_order" => "Update status orders",
+    "orders" => [
+        "status" => [
+            "approve" => "Approve",
+            "reject" => "Reject",
+            'processing' => "Processing",
+            'cancel' => "Cancel",
+            'refund' => "Refund",
+            'completed' => "Completed",
+        ]
+    ]
 ];

@@ -22,7 +22,7 @@
 @endforeach
 @endcomponent
 <h3 style="float: right; background: rgb(38, 148, 38); padding: 5px 10px; color: white">
-    {{ __('common.total') . ' : ' . number_format($total) }}$
+    {{ __('common.total') . ' : ' . number_format($total) }}đ
 </h3>
 
 <p style="padding: 40px 0 0 0">{{ __('common.msg_feedback') }}</p>

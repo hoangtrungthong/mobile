@@ -7,6 +7,19 @@
     padding-right: 0.75rem;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(236, 72, 153);
+}
+
 .intro-y {
     z-index: 48;
     position: relative;

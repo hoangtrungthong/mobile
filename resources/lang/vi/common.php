@@ -95,5 +95,16 @@ return [
     "end_date" => "Ngày kết thúc",
     "cart" => "Giỏ hàng",
     "or" => "Hoặc đăng nhập bằng",
-    "filter" => "Lọc"
+    "filter" => "Lọc",
+    "update_status_order" => "Cập nhật trạng thái đơn hàng",
+    "orders" => [
+        "status" => [
+            "approve" => "Xác nhận",
+            "reject" => "Từ chối",
+            'processing' => "Đang xử lý",
+            'cancel' => "Hủy đơn",
+            'refund' => "Hoàn hàng",
+            'completed' => "Hoàn thành",
+        ]
+    ]
 ];

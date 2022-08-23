@@ -1,7 +1,8 @@
 <nav
     class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4 bg-pink-500">
     <div class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
-        <a class="text-white text-sm uppercase hidden lg:inline-block font-semibold" href="{{ route('admin.dashboard') }}">{{ __('common.dashboard') }}</a>
+        <a class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
+            href="{{ route('admin.dashboard') }}">{{ __('common.dashboard') }}</a>
         <form action="{{ route('search') }}" method="get"
             class="md:flex hidden w-8/12 flex-row flex-wrap items-center lg:ml-auto mr-auto">
             <div class="relative flex w-full flex-wrap items-stretch">
@@ -36,7 +37,7 @@
                 <div x-show="!dropdownOpen"
                     class="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20"
                     style="width:20rem;">
-                    <div style="min-height: 200px; max-height:400px; overflow-y: auto; overflow-x: hidden">
+                    <div>
                         <div class="p-4 flex items-center justify-between">
                             <p class="text-sm text-indigo-600">{{ __('common.notifications') }}</p>
                             @if (count($data['notifications']))
@@ -47,133 +48,39 @@
                             @endif
                         </div>
                         <hr />
-                        @forelse ($data['notifications'] as $notify)
-                            <form action="{{ route('admin.notifications.update', $notify->id) }}" method="post"
-                                class="{{ $notify->read_at == null ? 'bg-blue-50' : 'bg-white' }} flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" class="focus:outline-none">
-                                    <div tabindex="0" aria-label="heart icon" role="img"
-                                        class="h-8 w-8 rounded-full object-cover mx-1 text-green-400">
-                                        <i class="fas fa-donate"></i>
-                                    </div>
-                                    <div class="text-gray-600 text-sm mx-2 block">
-                                        <p class="">{{ __('common.new_order') . $notify->data['content'] }}</p>
-                                        <p class="focus:outline-none float-left text-xs text-gray-500">
-                                            {{ $notify->created_at->diffForHumans($data['now']) }}
-                                        </p>
-                                    </div>
-                                </button>
-                            </form>
-                        @empty
-                            <div class="mt-10 text-center text-gray-500">
-                                <p class="">{{ __('common.empty_notify') }}</p>
-                                <i class="fas fa-bell-slash text-xl"></i>
-                            </div>
-                        @endforelse
+                        <div class="list-notification" style="min-height: 200px; max-height:400px; overflow-y: auto; overflow-x: hidden">
+                            @forelse ($data['notifications'] as $notify)
+                                <form action="{{ route('admin.notifications.update', $notify->id) }}" method="post"
+                                    class="{{ $notify->read_at == null ? 'bg-blue-50' : 'bg-white' }} flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="focus:outline-none">
+                                        <div class="flex text-left">
+                                            <div tabindex="0" aria-label="heart icon" role="img"
+                                                class="h-8 w-8 rounded-full object-cover mx-1 text-green-400">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <div class="text-gray-600 text-sm mx-2 block">
+                                                <p class="">
+                                                    {{ __('common.new_order') . $notify->data['content'] }}</p>
+                                                <p class="focus:outline-none float-left text-xs text-gray-500">
+                                                    {{ $notify->created_at->diffForHumans($data['now']) }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </form>
+                            @empty
+                                <div class="mt-10 text-center text-gray-500">
+                                    <p class="">{{ __('common.empty_notify') }}</p>
+                                    <i class="fas fa-bell-slash text-xl"></i>
+                                </div>
+                            @endforelse
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        {{-- <div class="flex-col md:flex-row list-none items-center hidden md:flex">
-            <a class="text-blueGray-500 block" onclick="openDropdown(event,'notifications')">
-                <div class="items-center flex">
-                    <span
-                        class="text-white">
-                        <i class="fa fa-bell"></i>
-                    </span>
-                    <p data-count="{{ $data['read'] && count($data['read']) > 0 ? count($data['read']) : 0 }}"
-                        id="count-notify"
-                        class="absolute bg-red-500 text-white px-2 rounded-full absolute top-1 text-bold">
-                        <span
-                            class="notify-count">{{ $data['read'] && count($data['read']) > 0 ? count($data['read']) : '' }}</span>
-                    </p>
-                </div>
-            </a>
-            <div class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
-                id="notifications">
-                <div class="tabs">
-                    <div class="mt-5 flex items-center justify-center gap-5">
-                        <div data-target="panel-1"
-                            class="active tab cursor-pointer opacity-70 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('common.all') }}
-                        </div>
-                        <div data-target="panel-2"
-                            class="tab cursor-pointer opacity-70 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('common.unread') }}
-                        </div>
-                        <a class="opacity-70 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            href="{{ route('admin.markAllRead') }}">
-                            {{ __('common.mark_read') }}
-                        </a>
-                    </div>
-                </div>
-                <div id="panels" class="relative w-full h-full top-0 overflow-y-auto overflow-x-hidden pb-40">
-                    <div class="tab-content panel-1 list-notification active">
-                        @forelse ($data['notifications'] as $notify)
-                            <form action="{{ route('admin.notifications.update', $notify->id) }}" method="post"
-                                class="flex items-center justify-between {{ $notify->read_at == null ? 'bg-blue-50' : 'bg-white' }}  p-3 mt-8">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" class="w-full rounded flex items-center">
-                                    <div tabindex="0" aria-label="heart icon" role="img"
-                                        class="text-green-400 focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center">
-                                        <i class="fas fa-donate"></i>
-                                    </div>
-                                    <div class="pl-3">
-                                        <p tabindex="0" class="focus:outline-none text-sm leading-none capitalize">
-                                            {{ __('common.new_order') . $notify->data['content'] }}
-                                        </p>
-                                        <p tabindex="0"
-                                            class="focus:outline-none float-left text-xs pt-1 text-gray-500">
-                                            {{ $notify->created_at->diffForHumans($data['now']) }}
-                                        </p>
-                                    </div>
-                                </button>
-                                @if ($notify->read_at == null)
-                                    <i class="fas fa-circle text-red-500" style="font-size: 6px"></i>
-                                @endif
-                            </form>
-                        @empty
-                            <div class="mt-20 text-center text-gray-500">
-                                <p class="">{{ __('common.empty_notify') }}</p>
-                                <i class="fas fa-bell-slash mt-5 text-6xl"></i>
-                            </div>
-                        @endforelse
-                    </div>
-                    <div class="tab-content panel-2 list-notification">
-                        @forelse ($data['read'] as $notify)
-                            <form action="{{ route('admin.notifications.update', $notify->id) }}" method="post"
-                                class="flex items-center justify-between {{ $notify->read_at == null ? 'bg-blue-50' : 'bg-white' }}  p-3 mt-8">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" class="w-full rounded flex items-center">
-                                    <div tabindex="0" aria-label="heart icon" role="img"
-                                        class="text-green-400 focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center">
-                                        <i class="fas fa-donate"></i>
-                                    </div>
-                                    <div class="pl-3">
-                                        <p tabindex="0" class="focus:outline-none text-sm leading-none capitalize">
-                                            {{ __('common.new_order') . $notify->data['content'] }}
-                                        </p>
-                                        <p tabindex="0"
-                                            class="focus:outline-none float-left text-xs pt-1 text-gray-500">
-                                            {{ $notify->created_at->diffForHumans($data['now']) }}
-                                        </p>
-                                    </div>
-                                </button>
-                                <i class="fas fa-circle text-red-500" style="font-size: 6px"></i>
-                            </form>
-                        @empty
-                            <div class="mt-20 text-center text-gray-500">
-                                <p class="">{{ __('common.empty_notify') }}</p>
-                                <i class="fas fa-bell-slash mt-5 text-6xl"></i>
-                            </div>
-                        @endforelse
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         <ul class="flex-col md:flex-row list-none items-center hidden md:flex">
             <a class="text-blueGray-500 block" onclick="openDropdown(event,'user-dropdown')">
                 <div class="items-center flex">

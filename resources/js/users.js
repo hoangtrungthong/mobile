@@ -186,4 +186,16 @@ $(document).ready(function () {
             );
             });
     });
+
+
+    $(document).on("click", ".update-status-order", function (e) {
+        var status = $(this).data("status");
+        var allStatus = JSON.parse($(this).attr("data-allStatus"));
+        var select = $(document).find("#status_order");
+        $.each(allStatus, function (key, value) {
+            if (value != status) {
+                select.append(new Option(helper.trans("common.orders.status." + key), value));
+            }
+        })        
+    });
 })
