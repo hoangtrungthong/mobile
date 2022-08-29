@@ -40,12 +40,12 @@ class DashboardController extends Controller
         $salesThisMonth = $orderRepository
             ->whereMonth('updated_at', Carbon::now()->month)
             ->whereNull("deleted_at")
-            ->whereStatus(config('const.approve'))
+            ->whereStatus(config('const.completed'))
             ->sum('amount');
         $salesBeforeMonth = $orderRepository
             ->whereMonth('updated_at', Carbon::now()->month - 1)
             ->whereNull("deleted_at")
-            ->whereStatus(config('const.approve'))
+            ->whereStatus(config('const.completed'))
             ->sum('amount');
 
         $totalOrderThisMonth = $orderRepository
@@ -80,7 +80,7 @@ class DashboardController extends Controller
         $order = $orderRepository
             ->whereYear('updated_at', Carbon::now()->year)
             ->whereNull("deleted_at")
-            ->whereStatus(config('const.approve'))
+            ->whereStatus(config('const.completed'))
             ->get()
             ->groupBy(
                 function ($date) {
@@ -164,8 +164,12 @@ class DashboardController extends Controller
     {
         return Order::whereDate("updated_at", ">=", $request->start_date)
             ->whereDate("updated_at", "<=", $request->end_date)
+            ->orWhere(function ($q) use ($request) {
+                $q->whereDate("created_at", ">=", $request->start_date)
+                    ->whereDate("created_at", "<=", $request->end_date);
+            })
             ->whereNull("deleted_at")
-            ->whereStatus(config('const.approve'))
+            ->whereStatus(config('const.completed'))
             ->get()
             ->groupBy(
                 function ($date) {
@@ -182,6 +186,10 @@ class DashboardController extends Controller
     {
         return Product::whereDate("updated_at", ">=", $request->start_date)
             ->whereDate("updated_at", "<=", $request->end_date)
+            ->orWhere(function ($q) use ($request) {
+                $q->whereDate("created_at", ">=", $request->start_date)
+                    ->whereDate("created_at", "<=", $request->end_date);
+            })
             ->whereNull("deleted_at")
             ->get()
             ->groupBy(
@@ -190,7 +198,11 @@ class DashboardController extends Controller
                 }
             )->map(
                 function ($item) {
-                    return array_sum($item->pluck('quantity')->toArray());
+                    $quantity = [];
+                    foreach ($item as $val) {
+                        $quantity[] = array_sum($val->productAttributes->pluck('quantity')->toArray());
+                    }
+                    return array_sum($quantity);
                 }
             )->toArray();
     }

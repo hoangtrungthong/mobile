@@ -152,11 +152,11 @@
                                                                 @endforeach
                                                                 <td
                                                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                                                    {{ number_format($attr->price) }}đ
+                                                                    {{ number_format($attr->price, 0, '', ',') }}đ
                                                                 </td>
                                                                 <td
                                                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                                                    {{ number_format($attr->export_price) }}đ
+                                                                    {{ number_format($attr->export_price, 0, '', ',') }}đ
                                                                 </td>
                                                                 <td
                                                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">

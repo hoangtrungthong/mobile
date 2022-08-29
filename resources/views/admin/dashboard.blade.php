@@ -17,7 +17,7 @@
                                                     {{ __('common.sale_values_month') }}
                                                 </h5>
                                                 <span class="font-semibold text-xl text-blueGray-700">
-                                                    {{ number_format($salesThisMonth) . 'đ' }}
+                                                    {{ number_format($salesThisMonth, 0, '', ',') . 'đ' }}
                                                 </span>
                                             </div>
                                             <div class="relative w-auto pl-4 flex-initial"
@@ -544,7 +544,10 @@
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" charset="utf-8"></script>
+    @section('js')
+        <script src="{{ asset('js/Chart.js') }}" defer></script>
+        <script src="{{ asset('js/chart.js') }}" defer></script>
+    @endsection
     <script type="text/javascript">
         window.dataChartSales = {!! $dataChartSales !!}
         window.dataChartQuantity = {!! $dataChartQuantity !!}

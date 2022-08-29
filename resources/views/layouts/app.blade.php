@@ -44,7 +44,7 @@
             <main class="w-full">
                 <div class="relative md:ml-64 bg-blueGray-50">
                     @include('layouts.navbar_admin')
-                    <div class="pt-60">
+                    <div class="pt-60 content-admin">
                         {{ $slot }}
                     </div>
                 </div>
@@ -53,6 +53,11 @@
     </div>
     <div class="px-4 md:ml-64 mx-auto -m-24 bg-blueGray-50">
         @include('layouts.footer')
+        <div class="overlay">
+            <div class="overlay__inner">
+                <div class="overlay"><span class="spinner"></span></div>
+            </div>
+        </div>
     </div>
     @yield('js')
 </body>

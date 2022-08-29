@@ -101,11 +101,11 @@
                                             <a href="" class="mt-3">{{ $product->name }}</a>
                                         </div>
                                         <div class="price mt-3">
-                                            <p>{{ number_format($product->discount > 0 ? $product->productAttributes[0]->sale_price : $product->productAttributes[0]->export_price) }}đ
+                                            <p>{{ number_format($product->discount > 0 ? $product->productAttributes[0]->sale_price : $product->productAttributes[0]->export_price, 0, '', ',') }}đ
                                             </p>
                                             @if ($product->discount > 0)
                                                 <del
-                                                    style="color: #ccc">{{ number_format($product->productAttributes[0]->export_price) }}đ</del>
+                                                    style="color: #ccc">{{ number_format($product->productAttributes[0]->export_price, 0, '', ',') }}đ</del>
                                             @endif
 
                                         </div>
@@ -156,7 +156,7 @@
                                                 </p>
                                                 @if ($product->discount > 0)
                                                     <del
-                                                        style="color: #ccc">{{ number_format($product->productAttributes[0]->export_price) }}đ</del>
+                                                        style="color: #ccc">{{ number_format($product->productAttributes[0]->export_price, 0, '', ',') }}đ</del>
                                                 @endif
                                             </div>
                                             @if ($product->discount > 0)
@@ -173,7 +173,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="bg-white border-b py-8">
+                {{-- <section class="bg-white border-b py-8">
                     <div class="container mx-auto flex flex-wrap pt-4 pb-12">
                         <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
                             Title
@@ -352,7 +352,7 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> --}}
                 <!-- Change the colour #f8fafc to match the previous section colour -->
                 <svg class="wave-top" viewBox="0 0 1439 147" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -380,7 +380,7 @@
                         </g>
                     </g>
                 </svg>
-                <section class="container mx-auto text-center py-6 mb-12">
+                {{-- <section class="container mx-auto text-center py-6 mb-12">
                     <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-white">
                         Call to Action
                     </h2>
@@ -394,7 +394,7 @@
                         class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                         Action!
                     </button>
-                </section>
+                </section> --}}
             </div>
         </div>
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
@@ -424,5 +424,8 @@
                 }, 500);
             }
         </script>
+        @section('js')
+            <script src="{{ asset('js/home.js') }}" defer></script>
+        @endsection
     </x-slot>
 </x-guest-layout>

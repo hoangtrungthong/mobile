@@ -40,6 +40,7 @@ return [
     'updateProfile' => 'Cập nhật ảnh đại diện',
     'changPass' => 'Đổi mật khẩu',
     'cancel' => 'Hủy',
+    "yes" => "Đồng ý",
     'profile' => 'Thông tin bản thân',
     'suggest' => 'Đề xuất',
     'order' => 'Đơn hàng',
@@ -72,6 +73,22 @@ return [
     'status' => 'Trạng thái',
     'general' => [
         "wrong" => "Rất tiếc đã xảy ra lỗi!",
+        "cancel" => "Hủy",
+        "records" => "bản ghi",
+        "search" => "Tìm kiếm",
+        "previous" => "Trang trước",
+        "next" => "Trang sau",
+        "showAll" => "Tất cả",
+        "show" => "Hiển thị",
+        "noData" => "Không có dữ liệu",
+        "of" => "của",
+        "showless" => "Thu gọn",
+        "readmore" => "Xem thêm",
+        "send_mail_successfully" => "Email sẽ được gửi trong vài phút tới.",
+        "or" => "Hoặc",
+        "from" => "từ",
+        "to" => "đến",
+        "noMatching" => "Không tìm thấy bản ghi phù hợp"
     ],
     'success' => [
         'update' => ' Cập nhật thành công',
@@ -106,5 +123,32 @@ return [
             'refund' => "Hoàn hàng",
             'completed' => "Hoàn thành",
         ]
-    ]
+    ],
+    'canceled' => "Đã hủy đơn",
+    'isCompleted' => "Đã hoàn thành",
+    "users_status" => [
+        "orders" => [
+            "status" => [
+                "approved" => "Đã được xác nhận",
+                'processing' => "Đang xử lý",
+                'canceled' => "Đã hủy đơn",
+                'refund' => "Hoàn hàng",
+            ]
+        ]
+    ],
+    "noData" => "Không có dữ liệu để hiển thị!",
+    "wrong" => "Có lỗi xảy ra!",
+    "currency" => "VNĐ",
+    "text_success_destroy_category" => "Nếu bạn xóa danh mục :name thì tất cả sản phẩm trong danh mục cũng sẽ bị xóa. Vẫn tiếp tục?",
+    "text_success_destroy_product" => "Bạn có chắc muốn xóa :name không?",
+    "text_fails_destroy_catrgory" => "Lỗi! Danh mục :name đang chứa sản phẩm đang được đặt hàng, vui lòng kiểm tra lại",
+    "title_destroy_category" => "Xóa danh mục",
+    "title_destroy_product" => "Xóa sản phẩm",
+    "delete_product_failed" => "Lỗi! Sản phẩm mà bạn xóa đang được đặt hàng, vui lòng kiểm tra lại",
+    "links" => "Liên kết",
+    "help" => "Giúp đỡ",
+    "support" => "Hỗ trợ",
+    "social" => "Mạng xã hội",
+    "company" => "Thông tin cửa hàng",
+    "contact" => "Liên lạc"
 ];

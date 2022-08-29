@@ -17,7 +17,7 @@
                                                         class="block text-sm font-medium text-gray-700">
                                                         {{ __('common.name') }}
                                                     </label>
-                                                    <input type="text" name="name" id="name"
+                                                    <input style="background: #ddd" type="text" name="name" id="name"
                                                         autocomplete="given-name" value="{{ $product->name }}" readonly
                                                         disabled
                                                         class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">

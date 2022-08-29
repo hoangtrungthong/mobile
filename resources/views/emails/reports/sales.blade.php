@@ -8,7 +8,7 @@
 |   {{ __('#') }}   |   {{ __('common.product') }}  |   {{ __('common.color') }}    |   {{ __('common.memory') }}   |   {{ __('common.quantity') }}     |   {{ __('common.price') }}     |  {{ __('common.total') }}    |
 | ----------------- |:-----------------------------:|:-----------------------------:|:-----------------------------:|:---------------------------------:|:------------------------------:|  ---------------------------:|
 @foreach ($reports as $item)
-|  {{ $num++ }}     |   {{ $item->product->name }}  |   {{ $item->color->name }}    |   {{ $item->memory->rom }}    |   {{ $item->total_qty }}           |   {{ number_format($item->price) }}$           |  {{ number_format($item->price * $item->total_qty) }}$    |
+|  {{ $num++ }}     |   {{ $item->product->name }}  |   {{ $item->color->name }}    |   {{ $item->memory->rom }}    |   {{ $item->total_qty }}           |   {{ number_format($item->price, 0, '', ',') }}đ           |  {{ number_format(($item->price * $item->total_qty), 0, '', ',') }}đ    |
 @endforeach
 @foreach ($reports as $vl)
     @php

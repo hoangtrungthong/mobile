@@ -4,8 +4,8 @@
             <div class="flex flex-wrap mt-4">
                 <div class="w-full mb-12 px-4">
                     <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
-                        <div class="block w-full overflow-x-auto">
-                            <table id="manage-user" class="items-center w-full bg-transparent border-collapse">
+                        <div class="block w-ful">
+                            <table id="manage-users" class="items-center w-full bg-transparent border-collapse">
                                 <thead>
                                     <tr>
                                         <th
@@ -42,8 +42,10 @@
                                                     </span>
                                                 </td>
                                                 <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                                                    <img src="@if ($user->image)
+                                                    <img src="@if ($user->image && !str_contains($user->image, "https://"))
                                                             {{ Storage::url($user->image) }}
+                                                        @elseif ($user->image && str_contains($user->image, "https://"))
+                                                            {{ $user->image }}
                                                         @else
                                                             {{ asset('images/avatar_default.png') }}
                                                         @endif"
@@ -98,4 +100,7 @@
             </div>
         </div>
     </x-slot>
+    @section('js')
+        <script src="{{ asset('js/users.js') }}" defer></script>
+    @endsection
 </x-app-layout>

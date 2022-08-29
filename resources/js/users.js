@@ -1,89 +1,114 @@
-var helper = require('./helper')
-import Swal from "sweetalert2"
-import routes from './routes'
+var helper = require("./helper");
+import Swal from "sweetalert2";
+import languageForDatatable from "./datatable/language";
+import routes from "./routes";
 
 $(document).ready(function () {
     let checkboxsActive = [];
     let checkboxsBlock = [];
-    $('#selectAll').change(function (e) {
+    $("#selectAll").change(function (e) {
         let allCheckbox = $(document).find('input[type="checkbox"]');
         if ($(this).checked) {
             allCheckbox.each(function (index, value) {
                 $(value).prop("checked", false);
-            })
-            $('.amount_active').empty();
-            $('.amount_block').empty();
-            $('#active_user').attr('disabled', true);
-            $('#block_user').attr('disabled', true);
+            });
+            $(".amount_active").empty();
+            $(".amount_block").empty();
+            $("#active_user").attr("disabled", true);
+            $("#block_user").attr("disabled", true);
         } else {
             allCheckbox.each(function (index, value) {
                 $(value).prop("checked", true);
-            })
+            });
             checkboxsActive.length = 0;
             checkboxsBlock.length = 0;
             allCheckbox.each(function (index, value) {
-                if ($(value).attr('data-status') == 2) {
+                if ($(value).attr("data-status") == 2) {
                     checkboxsBlock.push($(value).val());
-                } else if ($(value).attr('data-status') == 1) {
+                } else if ($(value).attr("data-status") == 1) {
                     checkboxsActive.push($(value).val());
                 }
             });
 
             if (checkboxsBlock.length) {
-                $('.amount_active').empty().text(`(${checkboxsBlock.length})`)
-                $('#active_user').attr('disabled', false);
+                $(".amount_active").empty().text(`(${checkboxsBlock.length})`);
+                $("#active_user").attr("disabled", false);
             }
             if (checkboxsActive.length) {
-                $('.amount_block').empty().text(`(${checkboxsActive.length})`)
-                $('#block_user').attr('disabled', false);
+                $(".amount_block").empty().text(`(${checkboxsActive.length})`);
+                $("#block_user").attr("disabled", false);
             }
         }
-    })
+    });
 
-    $(document).on('click', '.block_user', function (e) {
-        let id = $(this).data('id');
+    $(document).on("click", ".block_user", function (e) {
+        let id = $(this).data("id");
         $.ajax({
-            type: 'PATCH',
+            type: "PATCH",
             url: routes.users.blockUser,
             data: {
-                'id': id,
-            }
-        }).done(function (result) {
-            $(`.statusUser-${id}`).empty().append(
-                `<button data-id="${id}"
+                id: id,
+            },
+        })
+            .done(function (result) {
+                $(`.statusUser-${id}`)
+                    .empty()
+                    .append(
+                        `<button data-id="${id}"
                 class="active_user cursor-pointer inline-flex justify-center py-1 px-3 border border-transparent shadow-sm text-xs font-bold rounded-md text-white bg-green-500 focus:outline-none focus:ring-0 focus:ring-offset-0">
-                    ${ helper.trans('user.active') }
+                    ${helper.trans("user.active")}
                     <span class="amount_active"></span>
                 </button>`
-            );
-            helper.showToast(helper.trans('common.success.update'), 1500, 'success')
-        }).fail(function (errors) {
-            helper.showToast(helper.trans('common.general.wrong'), 1500, 'error')
-        })
-    })
+                    );
+                helper.showToast(
+                    helper.trans("common.success.update"),
+                    3000,
+                    "success"
+                );
+            })
+            .fail(function (errors) {
+                helper.showToast(
+                    helper.trans("common.general.wrong"),
+                    3000,
+                    "error"
+                );
+            });
+    });
 
-    $(document).on('click', '.active_user', function (e) {
-        let id = $(this).data('id');
+    $(document).on("click", ".active_user", function (e) {
+        let id = $(this).data("id");
 
         $.ajax({
-            type: 'PATCH',
+            type: "PATCH",
             url: routes.users.activeUser,
             data: {
-                'id': id,
-            }
-        }).done(function (result) {
-            $(`.statusUser-${id}`).empty().append(
-                `<button data-id="${id}"
+                id: id,
+            },
+        })
+            .done(function (result) {
+                $(`.statusUser-${id}`)
+                    .empty()
+                    .append(
+                        `<button data-id="${id}"
                     class="block_user cursor-pointer inline-flex justify-center py-1 px-3 border border-transparent shadow-sm text-xs font-bold rounded-md text-white bg-red-600 focus:outline-none focus:ring-0 focus:ring-offset-0">
-                    ${ helper.trans('user.block') }
+                    ${helper.trans("user.block")}
                     <span class="amount_active"></span>
                 </button>`
-            );
-            helper.showToast(helper.trans('common.success.update'), 1500, 'success')
-        }).fail(function (errors) {
-            helper.showToast(helper.trans('common.general.wrong'), 1500, 'error')
-        })
-    })
+                    );
+                helper.showToast(
+                    helper.trans("common.success.update"),
+                    3000,
+                    "success"
+                );
+            })
+            .fail(function (errors) {
+                helper.showToast(
+                    helper.trans("common.general.wrong"),
+                    3000,
+                    "error"
+                );
+            });
+    });
 
     // $('#block_user').click(function (e) {
     //     $.ajax({
@@ -134,7 +159,7 @@ $(document).ready(function () {
     //         helper.showToast(helper.trans('common.general.wrong'), 1500, 'error')
     //     })
     // })
-    
+
     // $('.btn-update-users').click(function () {
     //     var id = $(this).data('id');
     //     Swal.fire({
@@ -171,31 +196,31 @@ $(document).ready(function () {
             type: "POST",
             url: routes.users.order,
             data: data,
-        }).done(function (result) {
-            helper.showToast(
-                helper.trans("common.success.update"),
-                1500,
-                "success"
-            );
-        }).fail(function (errors) {
-            console.log(errors);
-            helper.showToast(
-                helper.trans("common.general.wrong"),
-                1500,
-                "error"
-            );
+        })
+            .done(function (result) {
+                helper.showToast(
+                    helper.trans("common.success.update"),
+                    1500,
+                    "success"
+                );
+            })
+            .fail(function (errors) {
+                console.log(errors);
+                helper.showToast(
+                    helper.trans("common.general.wrong"),
+                    1500,
+                    "error"
+                );
             });
     });
 
-
-    $(document).on("click", ".update-status-order", function (e) {
-        var status = $(this).data("status");
-        var allStatus = JSON.parse($(this).attr("data-allStatus"));
-        var select = $(document).find("#status_order");
-        $.each(allStatus, function (key, value) {
-            if (value != status) {
-                select.append(new Option(helper.trans("common.orders.status." + key), value));
-            }
-        })        
-    });
-})
+    new $.fn.dataTable.FixedColumns(
+        $("#manage-users").DataTable({
+            scrollY: "500px",
+            scrollCollapse: true,
+            paging: true,
+            fixedColumns: true,
+            oLanguage: languageForDatatable,
+        })
+    );
+});

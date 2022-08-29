@@ -4,7 +4,7 @@
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="shadow overflow-hidden border-b border-gray-200">
-                        <table class="min-w-full divide-y divide-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200" style="min-height: 350px">
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col"
@@ -70,8 +70,8 @@
                                                 <td class="px-6 py-3 whitespace-nowrap">
                                                     <div>
                                                         <p
-                                                            class="text-center py-1 text-center border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out">
-                                                            {{ number_format(intval($val['price'])) }}$
+                                                            class="text-center py-1 text-center border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight rounded transition duration-150 ease-in-out">
+                                                            {{ number_format(intval($val['price']), 0, '', ',') }}đ
                                                         </p>
                                                     </div>
                                                 </td>
@@ -85,8 +85,8 @@
                                                 </td>
                                                 <td class="px-6 py-3 whitespace-nowrap">
                                                     <div
-                                                        class="text-center py-1 text-center border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out">
-                                                        {{ number_format(intval($val['price']) * $val['quantity']) }}$
+                                                        class="text-center py-1 text-center border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight rounded transition duration-150 ease-in-out">
+                                                        {{ number_format(intval($val['price']) * $val['quantity']), 0, '', ',' }}đ
                                                     </div>
                                                 </td>
                                                 <td class=" px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
@@ -123,9 +123,9 @@
                                 @endphp
                             @endforeach
                             <div
-                                class="flex pr-40 gap-5 justify-end text-gray-600 uppercase font-bold bg-white col-lg-6 col-sm-6 col-6 total-section text-right">
-                                <p>{{ __('Total:') }}</p>
-                                <p>{{ number_format($total) }}$</p>
+                                class="flex pr-40 gap-5 justify-end text-gray-600 font-bold bg-white col-lg-6 col-sm-6 col-6 total-section text-right">
+                                <p class="uppercase">{{ __('Total:') }}</p>
+                                <p>{{ number_format($total, 0, '', ',') }}đ</p>
                             </div>
                         @endif
                         <div class="flex justify-between px-4 py-3 bg-white text-right sm:px-6">

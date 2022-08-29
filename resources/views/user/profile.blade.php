@@ -2,8 +2,10 @@
     <x-slot name="slot">
         <div class="grid grid-cols-2 text-black mt-20">
             <div class="flex flex-col items-center text-center bg-white pt-7">
-                <img @if ($user->image)
+                <img @if ($user->image && !str_contains($user->image, "https://"))
                         src="{{ Storage::url($user->image) }}"
+                    @elseif ($user->image && str_contains($user->image, "https://"))
+                        src="{{ $user->image }}"
                     @else
                         src="{{ asset('images/avatar_default.png') }}"
                     @endif

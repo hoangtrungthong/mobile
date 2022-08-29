@@ -38,7 +38,7 @@ Route::group(['middleware' => ['role:user','locale'] ], function () {
     Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
 
     Route::post('order', [OrderController::class, 'store'])->name('order');
-    Route::get('orders/list', [OrderController::class, 'getOrderPending'])->name('ordersPending');
+    Route::get('orders/list', [OrderController::class, 'getStatusOrder'])->name('getStatusOrder');
     Route::get('history-order', [OrderController::class, 'getOrderUser'])->name('historyOrder');
     Route::delete('destroy-order/{order}', [OrderController::class, 'destroy'])->name('destroyOrder');
 

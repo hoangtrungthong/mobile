@@ -48,9 +48,9 @@
                 <x-home-nav-link :href="route('home')" :active="request()->routeIs('home')">
                     {{ __('common.home') }}
                 </x-home-nav-link>
-                <div class="group inline-block">
+                <div class="nav-product group inline-block">
                     <div
-                        class="nav-product cursor-pointer outline-none focus:outline-none pl-3 pr-4 py-4 text-gray-200 rounded-sm flex items-center min-w-32">
+                        class="cursor-pointer outline-none focus:outline-none pl-3 pr-4 py-4 text-gray-200 rounded-sm flex items-center min-w-32">
                         <span class="pr-1 font-semibold flex-1">{{ __('common.product') }}</span>
                         <i
                             class="fas fa-angle-down fill-current h-4 w-4 transform group-hover:-rotate-180
@@ -75,7 +75,7 @@
                         {{ count(session('cart')) }}
                     @endif
                 </x-home-nav-link>
-                <x-home-nav-link :href="route('user.ordersPending')" :active="request()->routeIs('user.ordersPending')">
+                <x-home-nav-link :href="route('user.getStatusOrder')" :active="request()->routeIs('user.getStatusOrder')">
                     {{ __('common.order') }}
                 </x-home-nav-link>
                 @if (Route::has('login'))

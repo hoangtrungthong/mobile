@@ -1,5 +1,7 @@
 window._ = require('lodash');
 require('@fortawesome/fontawesome-free/js/all.js');
+require("gasparesganga-jquery-loading-overlay");
+require("datatables");
 window.$ = require('jquery');
 
 /**

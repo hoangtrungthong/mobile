@@ -26,17 +26,19 @@ class ELoquentOrderRepository extends EloquentRepository implements OrderReposit
 
         return $this->model->with('orderDetails')
             ->where('user_id', $user->id)
-            ->where('status', config('const.approve'))
+            ->where('status', config('const.completed'))
             ->paginate(config('const.pagination'));
     }
 
-    public function getAllOrderPending()
+    public function getStatusOrder()
     {
         $user = Auth::user();
 
         return $this->model->with('orderDetails')
             ->where('user_id', $user->id)
-            ->where('status', '=', config('const.pending'))
-            ->paginate(config('const.pagination'));
+            ->where('status', '<>', config('const.completed'))
+            ->orWhere('status', '<>', config('const.reject'))
+            ->get();
+            // ->paginate(config('const.pagination'));
     }
 }

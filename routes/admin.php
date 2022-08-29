@@ -43,6 +43,8 @@ Route::group(['middleware' => ['role:admin','locale'] ], function () {
     Route::get('order-details/{id}', [OrderController::class, 'show'])->name('orderDetails');
     Route::patch('approve-order/{id}', [OrderController::class, 'state'])->name('stateOrder');
     Route::patch('reject-order/{id}', [OrderController::class, 'rejectOrder'])->name('rejectOrder');
+    Route::patch("update-order/{id}", [OrderController::class, "actionStatusOrder"])->name("actionStatusOrder");
+    Route::get("get-all-orders", [OrderController::class, "getOrdersForDatatable"])->name("getOrdersForDatatable");
 
     Route::resource('notifications', NotificationController::class)->only(['index', 'update']);
     Route::get('mark-all-read', [NotificationController::class, 'markAllRead'])->name('markAllRead');

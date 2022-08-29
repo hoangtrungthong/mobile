@@ -13,7 +13,7 @@
 |   {{ __('#') }}   |   {{ __('common.product') }}  |   {{ __('common.color') }}    |   {{ __('common.memory') }}   |   {{ __('common.quantity') }}     |   {{ __('common.price') }}     |  {{ __('common.total') }}    |
 | ----------------- |:-----------------------------:|:-----------------------------:|:-----------------------------:|:---------------------------------:|:------------------------------:|  ---------------------------:|
 @foreach ($orderDetails as $key => $item)
-|  {{ $num++ }}     |   {{ $item->product->name }}  |   {{ $item->color->name }}    |   {{ $item->memory->rom }}    |   {{ $item->quantity }}           |   {{ number_format($item->price) }}$           |  {{ number_format($item->price * $item->quantity) }}$    |
+|  {{ $num++ }}     |   {{ $item->product->name }}  |   {{ $item->color->name }}    |   {{ $item->memory->rom }}    |   {{ $item->quantity }}           |   {{ number_format($item->price, 0, '', ',') }}đ           |  {{ number_format(($item->price * $item->quantity), 0, '', ',') }}đ    |
 @endforeach
 @foreach ($orderDetails as $vl)
     @php
@@ -22,7 +22,7 @@
 @endforeach
 @endcomponent
 <h3 style="float: right; background: rgb(38, 148, 38); padding: 5px 10px; color: white">
-    {{ __('common.total') . ' : ' . number_format($total) }}đ
+    {{ __('common.total') . ' : ' . number_format($total, 0, '', ',') }}đ
 </h3>
 
 <p style="padding: 40px 0 0 0">{{ __('common.msg_feedback') }}</p>

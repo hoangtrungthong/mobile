@@ -6,7 +6,7 @@ interface OrderRepository extends Repository
 {
     public function getAllOrders();
 
-    public function getAllOrderPending();
+    public function getStatusOrder();
 
     public function getOrderUserApprove();
 }

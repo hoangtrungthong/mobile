@@ -4,11 +4,11 @@
             <div class="flex flex-wrap mt-4">
                 <div class="w-full mb-12 px-4">
                     <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
-                        <div class="block w-full overflow-x-auto">
+                        <div class="block w-full">
                             <a href="{{ route('admin.products.create') }}" class="bg-pink-500 hover:bg-pink-700 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0">
                                 {{ __('common.new') }}
                             </a>
-                            <table class="items-center w-full bg-transparent border-collapse">
+                            <table id="manage-products" class="items-center w-full bg-transparent border-collapse">
                                 <thead>
                                     <tr>
                                         <th
@@ -65,9 +65,9 @@
                                                     {{ $product->updated_at }}
                                                 </td>
                                                 <td class="px-6 whitespace-nowrap text-left text-sm font-medium">
-                                                   <form action="{{ route('admin.products.destroy', $product->id) }}" method="post">
+                                                   {{-- <form action="{{ route('admin.products.destroy', $product->id) }}" method="post">
                                                         @csrf
-                                                        @method('DELETE')
+                                                        @method('DELETE') --}}
                                                         <a href="{{ route('admin.continueAdd', $product->slug) }}" class="inline-block bg-indigo-500 hover:bg-indigo-700 text-white text-center py-1 px-3 rounded">
                                                             <i class="fa fa-plus"></i>
                                                         </a>
@@ -77,10 +77,10 @@
                                                         <a href="{{ route('admin.products.edit', $product->slug) }}" class="inline-block bg-yellow-500 hover:bg-yellow-700 text-white text-center py-1 px-3 rounded">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white text-center py-1 px-3 rounded" onclick="return confirm('Are you sure to remove this products ?')">
+                                                        <a data-id="{{$product->id}}" data-name="{{$product->name}}" class="btn-delete-product bg-red-500 hover:bg-red-700 text-white text-center py-1 px-3 rounded">
                                                             <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
+                                                        </a>
+                                                    {{-- </form> --}}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -107,4 +107,8 @@
             </div>
         </div>
     </x-slot>
+    @section('js')
+        <script src="{{ asset('js/product.js') }}" defer></script>
+        window.deleteProduct = {!! session()->has("deleteProduct") ?? "" !!}
+    @endsection
 </x-app-layout>

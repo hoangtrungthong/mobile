@@ -3,7 +3,7 @@
         @if (count($products))
         <div class="bg-white pt-20">
             <div class="container mx-32">
-                <p class="text-gray-500 capitalize w-44 border-b border-gray-500">
+                <p class="text-gray-500 capitalize w-44 border-b border-gray-500" style="width: 15%;">
                     {{ __('common.found') . ' ' . count($products) . ' ' . __('common.product') }}
                 </p>
                 <div class="bg-white grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">

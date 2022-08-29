@@ -93,18 +93,17 @@ class AuthenticatedSessionController extends Controller
 
     public function redirectGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->redirectUrl("http://127.0.0.1:8000/google_callback")->redirect();
     }
 
     public function processGoogleLogin()
     {
         try {
-            $user = Socialite::driver('google')->user();
+            $user = Socialite::driver('google')->redirectUrl("http://127.0.0.1:8000/google_callback")->stateless()->user();
         } catch (\Exception $e) {
             return redirect()->route("login")->with('error', 'Try after some time');
         }
-        
-        
+       
         if (!$user) {
             return redirect()->route("login");
         }
@@ -114,11 +113,11 @@ class AuthenticatedSessionController extends Controller
                 "google_id" => $user->id,
             ],
             [
-                "name" => 'google_' . $user->name,
+                "name" => $user->name,
                 "email" => $user->email,
                 "password" => '',
-                "phone" => null,
-                "address" => null,
+                "phone" => '',
+                "address" => '',
                 "image" => $user->avatar
             ]
         );

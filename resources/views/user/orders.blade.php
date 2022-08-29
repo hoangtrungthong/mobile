@@ -4,7 +4,7 @@
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="shadow overflow-hidden">
-                        <table class="min-w-full divide-y divide-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200"  style="min-height: 350px">
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col"
@@ -47,10 +47,7 @@
                                         class="x-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         <p class="sr-only"> {{ __('common.edit') }}</p>
                                     </th>
-                                    <th scope="col"
-                                        class="x-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        <p class="sr-only"> {{ __('common.edit') }}</p>
-                                    </th>
+
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -90,7 +87,7 @@
                                                 </td>
                                                 <td class="px-6 py-3 text-center whitespace-nowrap">
                                                     <div class="text-sm font-medium text-gray-900">
-                                                        {{ number_format($items->price) }}$
+                                                        {{ number_format($items->price, 0, '', ',') }}đ
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-3 text-center whitespace-nowrap">
@@ -105,28 +102,60 @@
                                                 </td>
                                                 <td class="px-6 py-3 text-center whitespace-nowrap">
                                                     <div class="text-sm font-medium text-gray-900">
-                                                        {{ number_format($items->price * $items->quantity) }}$
+                                                        {{ number_format(($items->price * $items->quantity), 0, '', ',') }}đ
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-3 text-center whitespace-nowrap">
-                                                    <div
-                                                        class=" {{ $order->status == config('const.pending') ? 'bg-green-400' : __('common.reject') }} bg-red-400 text-white-500 p-1 border-green-600 font-medium text-xs leading-tight capitalize rounded transition duration-150 ease-in-out">
-                                                        {{ $order->status == config('const.pending') ? __('common.wait') : __('common.rejected') }}
-                                                    </div>
-                                                </td>
-                                                <td class="px-6 py-3 text-center whitespace-nowrap">
-                                                    <div class="flex justify-center gap-1">
-                                                        <form action="{{ route('user.destroyOrder', $order->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="bg-red-500 hover:bg-red-700 text-white text-center py-1 px-3 rounded"
-                                                                onclick="return confirm('Are you sure to remove this products ?')">
-                                                                <i class="fas fa-window-close"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
+                                                    @switch($order->status)
+                                                        @case(config('const.approve'))
+                                                            <p class="px-3 py-1 rounded text-white text-xs font-bold px-7"
+                                                                style="background:  rgb(127, 80, 238)">
+                                                                {{ __('common.users_status.orders.status.approved') }}
+                                                            </p>
+                                                        @break
+
+                                                        @case(config('const.processing'))
+                                                            <p class="px-3 py-1 rounded text-white text-xs font-bold bg-orange-400 px-7 "
+                                                                style="background:  rgb(232, 124, 66)">
+                                                                {{ __('common.users_status.orders.status.processing') }}
+                                                            </p>
+                                                        @break
+
+                                                        @case(config('const.cancel'))
+                                                            <p class="px-3 py-1 rounded text-white text-xs font-bold bg-amber-800 px-7 "
+                                                                style="background:  rgb(79, 59, 4)">
+                                                                {{ __('common.users_status.orders.status.canceled') }}
+                                                            </p>
+                                                        @break
+
+                                                        @case(config('const.refund'))
+                                                            <p class="px-3 py-1 rounded text-white text-xs font-bold bg-yellow-400 px-7 "
+                                                                style="background:  rgb(226, 197, 51)">
+                                                                {{ __('common.users_status.orders.status.refund') }}
+                                                            </p>
+                                                        @break
+
+                                                        @default
+                                                            <div class="flex justify-between" style="gap: 5px">
+                                                                <p class="px-3 py-1 rounded text-white text-xs font-bold px-7"
+                                                                    style="background:  rgb(245, 96, 235)">
+                                                                    {{ __('common.wait') }}
+                                                                </p>
+                                                                <div class="flex justify-center gap-1">
+                                                                    <form action="{{ route('user.destroyOrder', $order->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="bg-red-500 hover:bg-red-700 text-white text-center py-1 px-3 rounded"
+                                                                            onclick="return confirm('Are you sure to remove this products ?')">
+                                                                            <i class="fas fa-window-close"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+
+                                                            </div>
+                                                    @endswitch
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -150,9 +179,9 @@
                                 @endforeach
                             @endforeach
                             <div
-                                class="flex pr-40 gap-5 justify-end text-gray-600 uppercase font-bold bg-white col-lg-6 col-sm-6 col-6 total-section text-right">
-                                <p>{{ __('Total:') }}</p>
-                                <p>{{ number_format($total) }}$</p>
+                                class="flex pr-40 gap-5 justify-end text-gray-600 font-bold bg-white col-lg-6 col-sm-6 col-6 total-section text-right">
+                                <p class="uppercase">{{ __('Total:') }}</p>
+                                <p>{{ number_format($total, 0, '', ',') }}đ</p>
                             </div>
                         @endif
                         <div class="flex justify-between px-4 py-3 bg-white text-right sm:px-6">
@@ -164,8 +193,8 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white">
+            {{-- <div class="bg-white">
                 {{ $orders->links() }}
-            </div>
+            </div> --}}
     </x-slot>
 </x-guest-layout>

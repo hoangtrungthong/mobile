@@ -82,7 +82,7 @@
                                                 </td>
                                                 <td class="px-6 py-3 text-center whitespace-nowrap">
                                                     <div class="text-sm font-medium text-gray-900">
-                                                        {{ number_format($items->price) }}$
+                                                        {{ number_format($items->price, 0, '', ',') }}$
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-3 text-center whitespace-nowrap">
@@ -97,7 +97,7 @@
                                                 </td>
                                                 <td class="px-6 py-3 text-center whitespace-nowrap">
                                                     <div class="text-sm font-medium text-gray-900">
-                                                        {{ number_format($items->price * $items->quantity) }}$
+                                                        {{ number_format(($items->price * $items->quantity), 0, '', ',') }}$
                                                     </div>
                                                 </td>
                                             </tr>
@@ -113,7 +113,7 @@
                                     <tr class="text-white bg-gray-800">
                                         <th colspan="7"></th>
                                         <td class="text-sm font-bold"><b>{{ __('common.total') }}</b></td>
-                                        <td class="text-sm font-bold"><b>{{ number_format($total) }}$</b></td>
+                                        <td class="text-sm font-bold"><b>{{ number_format($total, 0, '', ',') }}$</b></td>
                                     </tr>
                                 @else
                                     <tr>

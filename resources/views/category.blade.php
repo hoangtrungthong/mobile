@@ -1,7 +1,12 @@
 <x-guest-layout>
     <x-slot name="slot">
-        <div class="bg-white pt-20">
-            <div class="container mx-32">
+        <div class="bg-white">
+            <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+                <div class="container mx-auto pt-4 border-b-2 border-pink-500">
+                    <h2 style="font-weight: 300"
+                        class="text-4xl pl-4 w-1/4 rounded-tr-3xl font-bold leading-tight text-white gradient">
+                        {{ $category->name }}</h2>
+                </div>
                 @if (count($category->childrenCategory) || count($category->products))
                     <div class="bg-white grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                         @if (count($category->childrenCategory))
@@ -11,7 +16,8 @@
                                         <div class="group relative">
                                             <div
                                                 class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                                                <img src="{{ Storage::url($product->productImages[0]->path) }}" alt="image"
+                                                <img src="{{ Storage::url($product->productImages[0]->path) }}"
+                                                    alt="image"
                                                     class="w-full h-full object-center object-cover lg:w-full lg:h-full">
                                             </div>
                                             <div class="mt-4 flex justify-between">
@@ -38,7 +44,8 @@
                                     <div class="group relative">
                                         <div
                                             class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                                            <img src="{{ Storage::url($product->productImages[0]->path) }}" alt="image"
+                                            <img src="{{ Storage::url($product->productImages[0]->path) }}"
+                                                alt="image"
                                                 class="w-full h-full object-center object-cover lg:w-full lg:h-full">
                                         </div>
                                         <div class="mt-4 flex justify-between">

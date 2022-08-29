@@ -32,25 +32,25 @@
                                             <table class="w-full">
                                                 <thead class="bg-gray-50">
                                                     <tr>
-                                                        <th class="px-4 py-2 text-xs text-gray-500 ">
+                                                        <th class="text-center px-4 py-2 text-sm text-gray-500 ">
                                                             {{ __('#') }}
                                                         </th>
-                                                        <th class="px-4 py-2 text-xs text-gray-500 ">
+                                                        <th class="text-center px-4 py-2 text-sm text-gray-500 ">
                                                             {{ __('common.product') }}
                                                         </th>
-                                                        <th class="px-4 py-2 text-xs text-gray-500 ">
+                                                        <th class="text-center px-4 py-2 text-sm text-gray-500 ">
                                                             {{ __('common.color') }}
                                                         </th>
-                                                        <th class="px-4 py-2 text-xs text-gray-500 ">
+                                                        <th class="text-center px-4 py-2 text-sm text-gray-500 ">
                                                             {{ __('common.memory') }}
                                                         </th>
-                                                        <th class="px-4 py-2 text-xs text-gray-500 ">
+                                                        <th class="text-center px-4 py-2 text-sm text-gray-500 ">
                                                             {{ __('common.quantity') }}
                                                         </th>
-                                                        <th class="px-4 py-2 text-xs text-gray-500 ">
+                                                        <th class="text-center px-4 py-2 text-sm text-gray-500 ">
                                                             {{ __('common.price') }}
                                                         </th>
-                                                        <th class="px-4 py-2 text-xs text-gray-500 ">
+                                                        <th class="text-center px-4 py-2 text-sm text-gray-500 ">
                                                             {{ __('common.total') }}
                                                         </th>
                                                     </tr>
@@ -70,8 +70,8 @@
                                                                     {{ $item->product->name }}
                                                                 </div>
                                                             </td>
-                                                            <td class="text-center px-6 py-4">
-                                                                <div class="text-sm text-gray-500">
+                                                            <td class="text-center text-sm  px-6 py-4">
+                                                                <div class="    uppercase text-gray-500">
                                                                     {{ $item->color->name }}</div>
                                                             </td>
                                                             <td class="text-center px-6 py-4 text-sm text-gray-500">
@@ -80,12 +80,12 @@
                                                             <td class="text-center px-6 py-4">
                                                                 {{ $item->quantity }}
                                                             </td>
-                                                            <td class="px-6 py-4">
-                                                                {{ $item->price }}
+                                                            <td class="text-center px-6 py-4">
+                                                                {{ number_format($item->price, 0, '', ',') . ' đ' }}
                                                             </td>
                                                             <td class="text-center px-6 py-4">
                                                                 <p class="bg-green-300 p-1 text-white">
-                                                                    {{ number_format($item->price * $item->quantity) . " đ" }}
+                                                                    {{ number_format($item->price * $item->quantity, 0, '', ',') . ' đ' }}
                                                                 </p>
                                                             </td>
                                                         </tr>
@@ -98,7 +98,7 @@
                                                     <tr class="text-center text-white bg-gray-800">
                                                         <th colspan="6"></th>
                                                         <td class="text-sm font-bold">
-                                                            <b>{{ number_format($total) . " đ" }}</b>
+                                                            <b>{{ number_format($total, 0, '', ',') . ' đ' }}</b>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -106,44 +106,82 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="flex justify-between bg-gray-100 text-right sm:px-6">
-                                        <a href="{{ route('admin.orders.index') }}"
-                                            class="items-center gap-2 bg-pink-500 hover:bg-pink-700 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0">
-                                            <i class="fas fa-arrow-circle-left"></i>
-                                            {{ __('common.back') }}
-                                        </a>
-                                        @if ($orderDetails[0]->order->status == config('const.approve') ||
-                                            $orderDetails[0]->order->status == config('const.reject'))
-                                            <p
-                                                class="items-center gap-2 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0 rounded text-white text-xs font-bold {{ $orderDetails[0]->order->status == config('const.reject') ? 'bg-red-400 px-7' : 'bg-green-400 ' }} ">
-                                                {{ $orderDetails[0]->order->status == config('const.reject') ? __('common.rejected') : __('common.accepted') }}
-                                            </p>
-                                        @else
-                                            <div class="flex gap-3 items-center mr-10">
-                                                <form
-                                                    action="{{ route('admin.stateOrder', $orderDetails[0]->order->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button type="submit"
-                                                        class="inline-block bg-indigo-500 hover:bg--700 text-white text-center py-1 px-3 rounded">
-                                                        <i class="fas fa-check-circle"></i>
-                                                    </button>
-                                                </form>
-                                                <form
-                                                    action="{{ route('admin.rejectOrder', $orderDetails[0]->order->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button type="submit"
-                                                        class="bg-red-500 hover:bg-red-700 text-white text-center py-1 px-3 rounded"
-                                                        onclick="return confirm('Are you sure to remove this products ?')">
-                                                        <i class="fas fa-window-close"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        @endif
-                                    </div>
+                                <div class="flex justify-between bg-gray-100 text-right sm:px-6">
+                                    <a href="{{ route('admin.orders.index') }}"
+                                        class="items-center gap-2 bg-pink-500 hover:bg-pink-700 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0">
+                                        <i class="fas fa-arrow-circle-left"></i>
+                                        {{ __('common.back') }}
+                                    </a>
+                                    @if ($orderDetails[0]->order->status > config('const.pedding'))
+                                        @switch($orderDetails[0]->order->status )
+                                            @case(config('const.reject'))
+                                                <p class="items-center gap-2 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0 rounded text-white text-sm font-bold bg-red-400 px-7 ">
+                                                    {{ __('common.rejected') }}
+                                                </p>
+                                            @break
+
+                                            @case(config('const.approve'))
+                                                <p class="items-center gap-2 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0 rounded text-white text-sm font-bold px-7"
+                                                    style="background:  rgb(127, 80, 238)">
+                                                    {{ __('common.accepted') }}
+                                                </p>
+                                            @break
+
+                                            @case(config('const.processing'))
+                                                <p class="items-center gap-2 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0 rounded text-white text-sm font-bold bg-orange-400 px-7 "
+                                                    style="background:  rgb(232, 124, 66)">
+                                                    {{ __('common.orders.status.processing') }}
+                                                </p>
+                                            @break
+
+                                            @case(config('const.cancel'))
+                                                <p class="items-center gap-2 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0 rounded text-white text-sm font-bold bg-amber-800 px-7 "
+                                                    style="background:  rgb(79, 59, 4)">
+                                                    {{ __('common.canceled') }}
+                                                </p>
+                                            @break
+
+                                            @case(config('const.refund'))
+                                                <p class="items-center gap-2 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0 rounded text-white text-sm font-bold bg-yellow-400 px-7 "
+                                                    style="background:  rgb(226, 197, 51)">
+                                                    {{ __('common.orders.status.refund') }}
+                                                </p>
+                                            @break
+
+                                            @case(config('const.completed'))
+                                                <p class="items-center gap-2 ml-5 cursor-pointer inline-flex justify-center my-5 py-1 px-3 border border-transparent shadow-sm text-sm font-bold rounded-md text-white focus:outline-none focus:ring-0 focus:ring-offset-0 rounded text-white text-sm font-bold bg-green-400 px-7 ">
+                                                    {{ __('common.isCompleted') }}
+                                                </p>
+                                            @break
+
+                                            @default
+                                                ''
+                                        @endswitch
+                                    @else
+                                        <div class="flex gap-3 items-center mr-10">
+                                            <form action="{{ route('admin.stateOrder', $orderDetails[0]->order->id) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit"
+                                                    class="inline-block bg-indigo-500 hover:bg--700 text-white text-center py-1 px-3 rounded">
+                                                    <i class="fas fa-check-circle"></i>
+                                                </button>
+                                            </form>
+                                            <form
+                                                action="{{ route('admin.rejectOrder', $orderDetails[0]->order->id) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit"
+                                                    class="bg-red-500 hover:bg-red-700 text-white text-center py-1 px-3 rounded"
+                                                    onclick="return confirm('Are you sure to remove this products ?')">
+                                                    <i class="fas fa-window-close"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                </div>
                             @endif
                         </div>
                     </div>

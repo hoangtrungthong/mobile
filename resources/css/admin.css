@@ -37,6 +37,182 @@
     background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
 }
 
+.dataTable {
+    width: 100% !important;
+}
+
+.dataTables_scrollHeadInner {
+    width: auto !important;
+    padding-right: 0 !important;
+}
+
+div.dataTables_length {
+    float: left;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+div.dataTables_length select {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 23px;
+}
+
+div.dataTables_filter {
+    float: right;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+div.dataTables_filter input {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-radius: 10px;
+    outline: none;
+}
+
+div.dataTables_info {
+    padding: 9px 6px 6px 6px;
+    float: left;
+}
+
+div.dataTables_paginate {
+    float: right;
+}
+
+div.dataTables_length,
+div.dataTables_filter,
+div.dataTables_paginate {
+    padding: 6px;
+}
+
+div.dataTables_length select {
+    border-radius: 10px;
+    outline: none;
+}
+
+[type='text']:focus,
+[type='email']:focus,
+[type='url']:focus,
+[type='password']:focus,
+[type='number']:focus,
+[type='date']:focus,
+[type='datetime-local']:focus,
+[type='month']:focus,
+[type='search']:focus,
+[type='tel']:focus,
+[type='time']:focus,
+[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+    border-color: #EC5A99 !important;
+    box-shadow: 0px 0px 0px 1px #EC5A99 !important;
+}
+
+.dataTables_wrapper:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+html[xmlns] .dataTables_wrapper {
+    display: block;
+}
+
+* html .dataTables_wrapper {
+    height: 1%;
+}
+
+.paginate_button,
+a.paginate_active {
+    display: inline-block;
+    padding: 2px 6px;
+    margin-left: 2px;
+    cursor: pointer;
+    *cursor: hand;
+}
+
+a.paginate_active {
+    background-color: transparent;
+    border: 1px solid black;
+}
+
+a.paginate_button_disabled {
+    color: #3d6672;
+}
+
+.paging_full_numbers a:active {
+    outline: none
+}
+
+.paging_full_numbers a:hover {
+    text-decoration: none;
+}
+
+div.dataTables_paginate span>a {
+    text-align: center;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border: 1px solid #ccc;
+}
+
+.dataTables_wrapper .dataTables_paginate .current {
+    background-color: #EC5A99;
+    color: white;
+}
+
+#manage-orders_wrapper, #manage-discount_wrapper, #manage-users_wrapper {
+    padding-top: 15px;
+}
+
+.overlay {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #222;
+    display: none;
+}
+
+.overlay__inner {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.overlay__content {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spinner {
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.05);
+    border-top-color: #fff;
+    animation: spin 1s infinite linear;
+    border-radius: 100%;
+    border-style: solid;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* product preview image */
 input[type="file"] {
     display: block;
@@ -80,6 +256,7 @@ input[type="file"] {
     right: 0;
 }
 
-a, li {
+a,
+li {
     cursor: pointer;
 }

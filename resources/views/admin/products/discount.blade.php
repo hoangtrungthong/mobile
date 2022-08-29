@@ -4,8 +4,8 @@
             <div class="flex flex-wrap mt-4">
                 <div class="w-full mb-12 px-4">
                     <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
-                        <div class="block w-full overflow-x-auto">
-                            <table class="items-center w-full bg-transparent border-collapse">
+                        <div class="block w-full">
+                            <table id="manage-discount" class="items-center w-full bg-transparent border-collapse">
                                 <thead>
                                     <tr>
                                         <th
@@ -69,12 +69,12 @@
                                                     </td>
                                                     <td data-discount="{{ $product->discount }}"
                                                         class="edit-discount-{{ $product->id }} border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                                        
                                                         <input
-                                                        class="px-2 py-1 w-1/3 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
-                                                        type="text" name="discount" min="0" max="100"
-                                                        value="{{ $product->discount }}">
-                                                        <button type="submit">
-                                                        </button>
+                                                            class="px-2 py-1 w-1/3 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded transition duration-150 ease-in-out"
+                                                            type="text" name="discount" min="0" max="100"
+                                                            data-id="{{ $product->id }}"
+                                                            value="{{ $product->discount }}">
                                                         {{-- <p>{{ $product->discount . '%' }}</p> --}}
                                                     </td>
                                                     {{-- <td class="px-6 whitespace-nowrap text-left text-sm font-medium">
@@ -119,4 +119,7 @@
             </div>
         </div>
     </x-slot>
+    @section('js')
+        <script src="{{ asset('js/discount.js') }}" defer></script>
+    @endsection
 </x-app-layout>

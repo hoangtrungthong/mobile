@@ -40,6 +40,7 @@ return [
     'updateProfile' => 'Update profile picture',
     'changPass' => 'Change password',
     'cancel' => 'Cancel',
+    "yes" => "Yes",
     'profile' => "Profile",
     'suggest' => 'Suggest',
     'order' => 'Orders',
@@ -71,7 +72,23 @@ return [
     'title_chart' => 'Revenue Statistical chart',
     'status' => 'Status',
     'general' => [
-        'wrong' => 'Opps! Somthing went wrong',
+        "wrong" => "Opps! Something went wrong!",
+        "cancel" => "Cancel",
+        "records" => "records",
+        "search" => "Search",
+        "previous" => "Previous",
+        "next" => "Next",
+        "showAll" => "All",
+        "show" => "Show",
+        "noData" => "No Data Found",
+        "of" => "of",
+        "showless" => "Show less",
+        "readmore" => "Read more",
+        "send_mail_successfully" => "Invitation emails will be sent in a few minutes.",
+        "or" => "Or",
+        "from" => "from",
+        "to" => "to",
+        "noMatching" => "No matching records found"
     ],
     'success' => [
         'update' => 'Update successfully',
@@ -105,7 +122,34 @@ return [
             'processing' => "Processing",
             'cancel' => "Cancel",
             'refund' => "Refund",
-            'completed' => "Completed",
+            'completed' => "Complete",
         ]
-    ]
+    ],
+    'canceled' => "Canceled",
+    'isCompleted' => "Completed",
+    "users_status" => [
+        "orders" => [
+            "status" => [
+                "approved" => "Approved",
+                'processing' => "Processing",
+                'canceled' => "Canceled",
+                'refund' => "Refund",
+            ]
+        ]
+    ],
+    "noData" => "No data to display!",
+    "wrong" => "Opps! Something went wrong",
+    "currency" => "$",
+    "text_success_destroy_category" => "If you delete :name then all the products in the category will also be deleted. Still continue?",
+    "text_fails_destroy_catrgory" => "Error! Category :name contains products being ordered, please check again!",
+    "text_success_destroy_product" => "Are you sure to delete :name?",
+    "title_destroy_category" => "Delete category",
+    "title_destroy_category" => "Delete product",
+    "delete_product_failed" => "Error! The product you deleted is being ordered, please check again",
+    "links" => "Links",
+    "help" => "Help",
+    "support" => "Support",
+    "social" => "Social",
+    "company" => "Information shop",
+    "contact" => "Contact"
 ];

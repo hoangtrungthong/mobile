@@ -26,4 +26,4 @@ Route::get('/redirect-google', [AuthenticatedSessionController::class, 'redirect
     ->name("redirectGoogle");
 
 Route::get('/google_callback', [AuthenticatedSessionController::class, 'processGoogleLogin'])
-    ->name("redirectGoogle");
+    ->name("googleCallback");

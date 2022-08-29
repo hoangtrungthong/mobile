@@ -1,13 +1,12 @@
 <x-guest-layout>
     <x-slot name="slot">
         <div class="container mx-auto mt-5 w-full max-w-lg text-black mt-40 my-40">
-            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style="margin-top: 110px;"
                 action="{{ route('user.changePassword', ['user' => $user]) }}" method="post">
                 @method('PATCH')
                 @csrf
                 <div class="flex items-center border-b border-teal-500 py-2 gap-5">
-                    <x-label class="block text-gray-700 text-sm font-bold mr-5 w-56" for="password"
-                        :value="__('common.password')" />
+                    <x-label class="block text-gray-700 text-sm font-bold mr-5 w-56" for="password" :value="__('common.password')" />
                     <x-input id="password"
                         class="appearance-none shadow-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none focus:ring-transparent"
                         type="password" name="password" required />

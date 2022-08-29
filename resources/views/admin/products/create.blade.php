@@ -6,7 +6,7 @@
                     <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
                         <div class="block w-full overflow-x-auto">
                             <div class="mt-5 md:mt-0 md:col-span-2">
-                                <form action="{{ route('admin.products.store') }}" method="POST"
+                                <form id="new-product" action="{{ route('admin.products.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="shadow-2xl rounded-md">
@@ -17,7 +17,7 @@
                                                         class="block text-sm font-medium text-gray-700">
                                                         {{ __('common.name') }}
                                                     </label>
-                                                    <input type="text" name="name" id="name"
+                                                    <input type="text" name=" name" id="name"
                                                         autocomplete="given-name"
                                                         class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                                     @error('name')
@@ -47,6 +47,9 @@
                                                                 <input type="text" name="quantity[]" id="quantity"
                                                                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                                             </div>
+                                                            @error('quantity')
+                                                                <p class="text-red-500">{{ $message }}</p>
+                                                            @enderror
                                                             <div class="w-1/5 col-span-6 sm:col-span-6 lg:col-span-2">
                                                                 <label for="color"
                                                                     class="block text-sm font-medium text-gray-700">{{ __('common.color') }}</label>
@@ -143,6 +146,8 @@
         </div>
     </x-slot>
     @section('js')
+        <script src="{{ asset('js/dashboard.js') }}" defer></script>
+        <script src="{{ asset('js/create-product.js') }}" defer></script>
         <script type="text/javascript">
             window.colors = {!! $colors !!};
             window.memories = {!! $memories !!};

@@ -10,6 +10,7 @@ use App\Http\Requests\Order\StoreRequest;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Jobs\SendEmailForApproveOrder;
+use App\Jobs\SendEmailForOrderSuccess;
 use App\Mail\ApprovedOrder;
 use App\Mail\OrderUser;
 use App\Models\Order;
@@ -64,9 +65,9 @@ class OrderController extends Controller
         return view('admin.orders.details', compact('orderDetails'));
     }
 
-    public function getOrderPending()
+    public function getStatusOrder()
     {
-        $orders = $this->orderRepository->getAllOrderPending();
+        $orders = $this->orderRepository->getStatusOrder();
 
         return view('user.orders', compact('orders'));
     }
@@ -146,7 +147,6 @@ class OrderController extends Controller
             $admin->notify(new OrderAdminNotification($orderData));
 
             // send mail for user
-            dispatch(new SendEmailForApproveOrder($order));
             Mail::to($order->user->email)
                 ->send(new OrderUser($order));
 
@@ -265,11 +265,126 @@ class OrderController extends Controller
         }
     }
 
-    public function actionStatusOrder(Request $request)
+    public function actionStatusOrder(Request $request, $id)
     {
-        
+        $order = Order::findOrFail($id);
+        $status = (int) $request->status;
+        switch ($status) {
+            case config("const.approve"):
+                $this->actionWithPendding($order, $status);
+                break;
+            case config("const.reject"):
+                $this->actionWithPendding($order, $status);
+                break;
+            case config("const.processing"):
+                $this->actionIsProcessing($order, $status);
+                break;
+            case config("const.cancel"):
+                $this->actionIsCancel($order, $status);
+                break;
+            case config("const.refund"):
+                $this->actionIsRefund($order, $status);
+                break;
+            case config("const.completed"):
+                $this->actionIsRefund($order, $status);
+                break;
+            default:
+                throw new Exception("fail");
+        }
     }
-    
+
+    public function actionWithPendding($order, $status)
+    {
+        if ($order->status == config("const.pendding")) {
+            $this->updateStatus($order, $status);
+        } else {
+            throw new Exception("fail");
+        }
+    }
+
+    public function actionIsProcessing($order, $status)
+    {
+        if ($order->status == config("const.approve") || $order->status == config("const.refund")) {
+            $this->updateStatus($order, $status);
+        } else {
+            throw new Exception("fail");
+        }
+    }
+
+    public function actionIsCancel($order, $status)
+    {
+        if ($order->status == config("const.cancel")) {
+            $this->updateStatus($order, $status);
+        } else {
+            throw new Exception("fail");
+        }
+    }
+
+    public function actionIsRefund($order, $status)
+    {
+        if ($order->status == config("const.processing") || $order->status == config("const.completed")) {
+            foreach ($order->orderDetails as $item) {
+                $color = $item->color_id;
+                $memory = $item->memory_id;
+                foreach ($item->product->productAttributes as $it) {
+                    $it->where("color_id", $color)
+                        ->where("memory_id", $memory)
+                        ->update([
+                            "quantity" => $item->quantity
+                        ]);
+                }
+            }
+            $this->updateStatus($order, $status);
+        } else {
+            throw new Exception("fail");
+        }
+    }
+    public function actionIsCompleted($order, $status)
+    {
+        if ($order->status == config("const.processing")) {
+            $this->updateStatus($order, $status);
+        } else {
+            throw new Exception("fail");
+        }
+    }
+
+    public function updateStatus($order, $status)
+    {
+
+        try {
+            DB::beginTransaction();
+
+            $order->update(
+                [
+                    'status' => $status,
+                ]
+            );
+
+            // send mail to user after admin approve order
+            Mail::to($order->user->email)
+                ->send(new ApprovedOrder($order));
+
+            DB::commit();
+
+            return response()->json([
+                "data" => $order,
+                "status" => 200
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            Log::error($ex);
+        }
+    }
+
+    public function getOrdersForDatatable()
+    {
+        $orders = $this->orderRepository->getAllOrders();
+
+        return response()->json([
+            "data" => $orders
+        ]);
+    }
+
     public function getApiAllOrder()
     {
         if (Auth::user()->tokenCan('admin:view')) {

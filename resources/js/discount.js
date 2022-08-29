@@ -1,3 +1,6 @@
+var helper = require("./helper");
+import languageForDatatable from "./datatable/language";
+
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
@@ -45,7 +48,7 @@ $(document).ready(function () {
     // });
 
     // window.onclick = function () {
-        
+
     // }
 
     // $(document).on("click", ".btn-update-discount", function (e) {
@@ -64,12 +67,38 @@ $(document).ready(function () {
     // });
 
     $(document).on("keypress", "input[name='discount']", function (evt) {
+        let id = $(this).data("id");
+        let value = $(this).val();
         evt = evt ? evt : window.event;
         var charCode = evt.which ? evt.which : evt.keyCode;
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
-        return true;
+
+        if (evt.which == 13) {
+            $.ajax({
+                type: "PATCH",
+                url: `discount/${id}`,
+                data: {
+                    discount: value,
+                },
+            })
+                .done(function (e) {
+                    helper.showToast(
+                        helper.trans("common.success.update"),
+                        3000,
+                        "success"
+                    );
+                })
+                .fail(function (errors) {
+                    console.log(errors);
+                    helper.showToast(
+                        helper.trans("common.general.wrong"),
+                        3000,
+                        "error"
+                    );
+                });
+        }
     });
 
     // $(document).on("click", ".btn-cancel-discount", function (e) {
@@ -86,4 +115,23 @@ $(document).ready(function () {
     //     //     .removeClass("bg-green-500 hover:bg-green-700")
     //     //     .addClass("bg-yellow-500 hover:bg-yellow-700");
     // });
+    window.onload = function (e) {
+        if (localStorage.getItem("flash") != null) {
+            helper.showToast(
+                helper.trans("common.success.update"),
+                3000,
+                "success"
+            );
+            localStorage.removeItem("flash");
+        }
+    };
+    new $.fn.dataTable.FixedColumns(
+        $("#manage-discount").DataTable({
+            scrollY: "500px",
+            scrollCollapse: true,
+            paging: true,
+            fixedColumns: true,
+            oLanguage: languageForDatatable,
+        })
+    );
 });

@@ -51,7 +51,7 @@ class ProductController extends Controller
         $this->productAttributeRepository = $productAttributeRepository;
         $this->productImageRepository = $productImageRepository;
     }
-    
+
     public function calculatePrice(
         int $oldPrice,
         int $oldQuantity,
@@ -61,12 +61,12 @@ class ProductController extends Controller
         $price = 0;
         if ($oldPrice < $newPrice && $oldPrice > 0) {
             $price = $newPrice + (($oldPrice * $oldQuantity) + ($newPrice * $newQuantity)) / ($oldQuantity + $newQuantity);
-        } elseif($oldPrice == 0) {
+        } elseif ($oldPrice == 0) {
             $price = $newPrice + ($newPrice * 30) / 100;
         } else {
             $price = $oldPrice + ($oldPrice * 30) / 100;
         }
-       
+
         return  $price;
     }
 
@@ -222,7 +222,7 @@ class ProductController extends Controller
 
             $product->update($data);
             if (!$product->update($data)) {
-               return redirect()->back();
+                return redirect()->back();
             }
 
             $ids = $product->productAttributes->pluck('id')->toArray();
@@ -260,7 +260,7 @@ class ProductController extends Controller
             Log::error($e);
         }
     }
-    
+
     public function updateNew(UpdateNewProductRequest $request, Product $product)
     {
         try {
@@ -270,7 +270,7 @@ class ProductController extends Controller
                 $oldPrice[] = $item->price;
                 $oldQuantity[] = $item->quantity;
             }
-            
+
             foreach ($request->quantity as $key => $item) {
                 $productAttr = $product->productAttributes()
                     ->where("color_id", $request->color_id[$key])
@@ -303,9 +303,9 @@ class ProductController extends Controller
                     ];
                 }
             };
-            
+
             $this->productAttributeRepository->insert($dataForInsert);
-            
+
             DB::commit();
 
             return redirect()->route('admin.products.index');
@@ -327,14 +327,19 @@ class ProductController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->productRepository->deleteProduct($id);
+            $a = $this->productRepository->deleteProduct($id);
 
             DB::commit();
 
-            return redirect()->route('admin.products.index');
+            return response()->json([
+                "data" => $a
+            ]);
         } catch (Exception $e) {
             DB::rollback();
             Log::error($e);
+            return response()->json([
+                "data" => ""
+            ]);
         }
     }
 
@@ -391,7 +396,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->update([
-           "discount" => $request->discount 
+            "discount" => $request->discount
         ]);
         if ($request->discount > 0) {
             foreach ($product->productAttributes as $attr) {
@@ -402,6 +407,8 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->back()->with("discountSuccess", "discount successfully");
+        return response()->json([
+            "data" => $product
+        ]);
     }
 }

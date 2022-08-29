@@ -1,4 +1,5 @@
 import { showToast } from "./helper";
+var helper = require("./helper");
 
 // chart sale order
 let chartOrder = new Chart(document.getElementById("chart-sales"), {
@@ -100,29 +101,30 @@ let chartProduct = new Chart(document.getElementById("chart-quantity"), {
             new Date().getFullYear();
     }
 })();
-/* Sidebar - Side navigation menu on mobile/responsive mode */
-function toggleNavbar(collapseID) {
-    document.getElementById(collapseID).classList.toggle("hidden");
-    document.getElementById(collapseID).classList.toggle("bg-white");
-    document.getElementById(collapseID).classList.toggle("m-2");
-    document.getElementById(collapseID).classList.toggle("py-3");
-    document.getElementById(collapseID).classList.toggle("px-6");
-}
-/* Function for dropdowns */
-function openDropdown(event, dropdownID) {
-    let element = event.target;
-    while (element.nodeName !== "A") {
-        element = element.parentNode;
-    }
-    Popper.createPopper(element, document.getElementById(dropdownID), {
-        placement: "bottom-start",
-    });
-    document.getElementById(dropdownID).classList.toggle("hidden");
-    document.getElementById(dropdownID).classList.toggle("block");
-}
+// /* Sidebar - Side navigation menu on mobile/responsive mode */
+// function toggleNavbar(collapseID) {
+//     document.getElementById(collapseID).classList.toggle("hidden");
+//     document.getElementById(collapseID).classList.toggle("bg-white");
+//     document.getElementById(collapseID).classList.toggle("m-2");
+//     document.getElementById(collapseID).classList.toggle("py-3");
+//     document.getElementById(collapseID).classList.toggle("px-6");
+// }
+// /* Function for dropdowns */
+// function openDropdown(event, dropdownID) {
+//     let element = event.target;
+//     while (element.nodeName !== "A") {
+//         element = element.parentNode;
+//     }
+//     Popper.createPopper(element, document.getElementById(dropdownID), {
+//         placement: "bottom-start",
+//     });
+//     document.getElementById(dropdownID).classList.toggle("hidden");
+//     document.getElementById(dropdownID).classList.toggle("block");
+// }
 
 $(document).ready(function () {
-    $("input[type='date']").attr("max", new Date().toISOString().split("T")[0]);
+    let a = $("input[type='date']").attr("max", new Date().toISOString().split("T")[0]);
+    console.log(a);
     $("#btn-filter_order").click(function (e) {
         e.preventDefault();
         $(".errorDate").empty();
@@ -172,11 +174,11 @@ $(document).ready(function () {
                     chartOrder.data.datasets[0].data = Object.values(results);
                     chartOrder.update();
                 } else {
-                    showToast("Không có dữ liệu để hiển thị!", 3000, "error");
+                    showToast(helper.trans("common.noData"), 3000, "error");
                 }
             })
             .fail(function (errors) {
-                showToast("Có lỗi xảy ra!", 3000, "error");
+                showToast(helper.trans("common.wrong"), 3000, "error");
             });
     });
 
@@ -229,11 +231,11 @@ $(document).ready(function () {
                     chartProduct.data.datasets[0].data = Object.values(results);
                     chartProduct.update();
                 } else {
-                    showToast("Không có dữ liệu để hiển thị!", 3000, "error");
+                    showToast(helper.trans("common.noData"), 3000, "error");
                 }
             })
             .fail(function (errors) {
-                showToast("Có lỗi xảy ra!", 3000, "error");
+                showToast(helper.trans("common.wrong"), 3000, "error");
             });
     });
 

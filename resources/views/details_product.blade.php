@@ -98,14 +98,14 @@
                     <div class="mt-4 lg:mt-0 lg:row-span-3">
                         <h2 class="sr-only">Product information</h2>
                         @php
-                        if ($product->discount > 0) {
-                            $price = array_unique($product->productAttributes->pluck('sale_price')->toArray());
-                        } else {
-                            $price = array_unique($product->productAttributes->pluck('export_price')->toArray());
-                        }
+                            if ($product->discount > 0) {
+                                $price = array_unique($product->productAttributes->pluck('sale_price')->toArray());
+                            } else {
+                                $price = array_unique($product->productAttributes->pluck('export_price')->toArray());
+                            }
                         @endphp
                         @foreach ($price as $p)
-                            <p class="text-3xl text-gray-900">{{ number_format($p) }}đ</p>
+                            <p class="text-3xl text-gray-900">{{ number_format($p, 0, '', ',') }}đ</p>
                         @endforeach
 
                         <form action="{{ route('user.addCart', $product->slug) }}" method="post" class="mt-10">
@@ -250,7 +250,11 @@
                     <div class="mt-10">
                         <div class="flex items-center gap-1">
                             <img class="h-10 w-10"
-                                src="{{ $comment->user->image ? Storage::url($comment->user->image) : asset('images/avatar_default.png') }}"
+                                src="{{ $comment->user->image && !str_contains($comment->user->image, "https://")
+                                    ? Storage::url($comment->user->image)
+                                    : ($comment->user->image && $str_contains($comment->user->image, "https://")
+                                        ? $comment->user->image
+                                        : asset('images/avatar_default.png')) }}"
                                 alt="" srcset="">
                             <p>{{ $comment->user->name }}</p>
                         </div>
@@ -263,7 +267,7 @@
             window.product_attr = {!! $product->productAttributes !!}
             // {!! $product->productAttributes !!}.forEach(el => {
             //     el.memories.forEach(element => {
-                    
+
             //     });
             // });
         </script>

@@ -153,6 +153,12 @@ class CategoryController extends Controller
             }
 
             $productIds = $category->products->pluck('id')->toArray();
+            $products = Product::whereIn('id', $productIds)->get();
+            foreach($products as $product) {
+                if ($product->orderDetails->count() > 0) {
+                    return false;
+                }
+            };
             ProductAttribute::whereIn('product_id', $productIds)->delete();
             ProductImage::whereIn('product_id', $productIds)->delete();
             Product::whereIn('id', $productIds)->delete();
@@ -161,7 +167,9 @@ class CategoryController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.categories.index');
+            return response()->json([
+                "data" => $category
+            ]);
         } catch (Exception $e) {
             DB::rollback();
             Log::error($e);

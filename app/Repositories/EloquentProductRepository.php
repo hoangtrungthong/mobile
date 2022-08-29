@@ -35,6 +35,9 @@ class EloquentProductRepository extends EloquentRepository implements ProductRep
     public function deleteProduct($id)
     {
         $result = $this->model->findOrFail($id);
+        if ($result->orderDetails->count() > 0) {
+            return false;
+        }
         $result->productAttributes()->delete();
         $result->productImages()->delete();
 

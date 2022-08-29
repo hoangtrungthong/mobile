@@ -1,4 +1,4 @@
-<footer class="bg-white">
+<footer class="bg-white"    >
     <div class="container mx-auto px-8">
         <div class="w-full flex flex-col md:flex-row py-6">
             <div class="flex-1 mb-6 text-black">
@@ -8,24 +8,24 @@
                 </a>
             </div>
             <div class="flex-1">
-                <p class="uppercase text-gray-500 md:mb-6">{{ __('Links') }}</p>
+                <p class="uppercase text-gray-500 md:mb-6">{{ __('common.links') }}</p>
                 <ul class="list-reset mb-6">
                     <li class="mt-2 inline-block mr-2 md:block md:mr-0">
                         <a href="#"
-                            class="no-underline hover:underline text-gray-800 hover:text-pink-500">{{ __('FAQ') }}</a>
+                            class="no-underline hover:underline text-gray-800 hover:text-pink-500">{{ __('FAQs') }}</a>
                     </li>
                     <li class="mt-2 inline-block mr-2 md:block md:mr-0">
                         <a href="#"
-                            class="no-underline hover:underline text-gray-800 hover:text-pink-500">{{ __('Help') }}</a>
+                            class="no-underline hover:underline text-gray-800 hover:text-pink-500">{{ __('common.help') }}</a>
                     </li>
                     <li class="mt-2 inline-block mr-2 md:block md:mr-0">
                         <a href="#"
-                            class="no-underline hover:underline text-gray-800 hover:text-pink-500">{{ __('Support') }}</a>
+                            class="no-underline hover:underline text-gray-800 hover:text-pink-500">{{ __('common.support') }}</a>
                     </li>
                 </ul>
             </div>
             <div class="flex-1">
-                <p class="uppercase text-gray-500 md:mb-6">{{ __('Social') }}</p>
+                <p class="uppercase text-gray-500 md:mb-6">{{ __('common.social') }}</p>
                 <ul class="list-reset mb-6">
                     <li class="mt-2 inline-block mr-2 md:block md:mr-0">
                         <a href="#"
@@ -42,12 +42,17 @@
                 </ul>
             </div>
             <div class="flex-1">
-                <p class="uppercase text-gray-500 md:mb-6">{{ __('Company') }}</p>
+                <p class="uppercase text-gray-500 md:mb-6">{{ __('common.company') }}</p>
                 <ul class="list-reset mb-6">
                     <li class="mt-2 inline-block mr-2 md:block md:mr-0">
                         <a href="#"
-                            class="no-underline hover:underline text-gray-800 hover:text-pink-500">{{ __('Contact') }}</a>
+                            class="no-underline hover:underline text-gray-800 hover:text-pink-500">{{ __('common.contact') }}: Mr.Thông 0345236493</a>
                     </li>
+                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                        <a href="#"
+                            class="no-underline hover:underline text-gray-800 hover:text-pink-500">Keangnam, Mễ trì, Hà Nội</a>
+                    </li>
+
                 </ul>
             </div>
         </div>
