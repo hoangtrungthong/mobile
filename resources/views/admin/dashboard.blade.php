@@ -20,15 +20,14 @@
                                                     {{ number_format($salesThisMonth, 0, '', ',') . 'đ' }}
                                                 </span>
                                             </div>
-                                            <div class="relative w-auto pl-4 flex-initial"
-                                                style="top: -40px;left: 125px;">
+                                            <div class="relative w-auto pl-4 flex-initial">
                                                 <div
                                                     class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500">
                                                     <i class="far fa-chart-bar"></i>
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="text-xs text-blueGray-400" style="margin-top: -28px">
+                                        <p class="text-xs text-blueGray-400">
                                             <span
                                                 class="{{ $salesThisMonth >= $salesBeforeMonth ? 'text-emerald-500' : 'text-red-500' }} mr-2">
                                                 <i

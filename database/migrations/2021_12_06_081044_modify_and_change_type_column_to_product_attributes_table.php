@@ -14,8 +14,8 @@ class ModifyAndChangeTypeColumnToProductAttributesTable extends Migration
     public function up()
     {
         Schema::table('product_attributes', function (Blueprint $table) {
-            $table->integer('color')->change();
-            $table->integer('ram')->change();
+            $table->string('color')->change();
+            $table->string('ram')->change();
             $table->string('price')->change();
             $table->renameColumn('color', 'color_id');
             $table->renameColumn('ram', 'memory_id');

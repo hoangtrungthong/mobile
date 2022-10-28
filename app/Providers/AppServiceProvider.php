@@ -7,6 +7,8 @@ use App\Contracts\Repositories\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use \Illuminate\Support\Facades\URL;
+use Illuminate\Routing\UrlGenerator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,7 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if (env('REDIRECT_HTTPS')) {
+            $this->app['request']->server->set('HTTPS', true);
+        }
     }
 
     /**
@@ -27,8 +31,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(
         CategoryRepository $categoryRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        UrlGenerator $url
     ) {
+        if (env('REDIRECT_HTTPS')) {
+            $url->formatScheme('https');
+        }
+        // if ($this->app->environment('production')) {
+        //     URL::forceScheme('https');
+        // }
         if (!app()->runningInConsole()) {
             $categories = $categoryRepository->whereParent(config('const.users.status.active'))->get();
 
